@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=1366">
 <meta name="theme-color" content="#E07B00">
 <title>南安酥梨·数字文化体验馆</title>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
@@ -1501,46 +1501,19 @@ var ASSETS = {
   poster: '宣传海报.png'
 };
 var _imgCache = {};
-function loadImg(src, timeout){
+function loadImg(src, timeout, cacheBuster){
   if(_imgCache[src]) return Promise.resolve(_imgCache[src]);
-  timeout = timeout || 8000;
-  // 策略：先fetch为Blob（彻底绕开crossOrigin/CORS），再生成object URL赋给Image
+  timeout = timeout || 6000;
+  // 默认不加时间戳：让浏览器的 HTTP 缓存（Cache-Control: 1年）真正生效
+  // cacheBuster=true 时才加（开发调试用）
+  var url = (cacheBuster === false) ? src : src + (src.indexOf('?')>=0?'&':'?')+'_t='+Date.now();
   return new Promise(function(resolve,reject){
     var settled=false;
-    var timer=setTimeout(function(){
-      if(!settled){ settled=true; reject(new Error('图片加载超时:'+src)); }
-    },timeout);
-    var url = src + (src.indexOf('?')>=0?'&':'?')+'_t='+Date.now();
-    fetch(url, {mode:'cors'}).then(function(resp){
-      if(!resp.ok) throw new Error('HTTP '+resp.status);
-      return resp.blob();
-    }).then(function(blob){
-      var objURL = URL.createObjectURL(blob);
-      var img = new Image();
-      img.onload=function(){
-        if(settled) return; settled=true; clearTimeout(timer);
-        img.crossOrigin='anonymous'; // 让canvas能读取像素
-        _imgCache[src]=img; resolve(img);
-      };
-      img.onerror=function(){
-        if(settled) return; settled=true; clearTimeout(timer);
-        reject(new Error('Image解码失败:'+src));
-      };
-      img.src = objURL;
-    }).catch(function(err){
-      // fetch失败时降级：用默认Image加载（不带crossOrigin）
-      if(settled) return;
-      var img=new Image();
-      img.onload=function(){
-        if(settled) return; settled=true; clearTimeout(timer);
-        _imgCache[src]=img; resolve(img);
-      };
-      img.onerror=function(){
-        if(settled) return; settled=true; clearTimeout(timer);
-        reject(new Error('图片加载失败(fetch+fallback都不行):'+src+' '+err.message));
-      };
-      img.src=url;
-    });
+    var img = new Image();
+    img.onload = function(){ if(settled) return; settled=true; clearTimeout(timer); _imgCache[src]=img; resolve(img); };
+    img.onerror = function(){ if(settled) return; settled=true; clearTimeout(timer); reject(new Error('图片加载失败:'+src)); };
+    var timer = setTimeout(function(){ if(!settled){ settled=true; img.src=''; reject(new Error('图片加载超时:'+src)); } }, timeout);
+    img.src = url;
   });
 }
 
@@ -1817,10 +1790,19 @@ window.addEventListener('load', function(){
   detectDevice();
   window.addEventListener('resize', detectDevice);
   renderNav();
-  // 预加载本地素材（失败静默，不影响主流程）
-  loadImg(ASSETS.ip).catch(function(){});
-  loadImg(ASSETS.poster).catch(function(){});
-  loadImg('部署二维码.png').catch(function(){});
+  // 预加载所有本地素材（cacheBuster=false：让浏览器 HTTP 缓存真正生效，秒出！）
+  // 用 Promise.allSettled 并行拉，不阻塞主渲染，失败静默
+  var preloadList = [
+    ASSETS.ip,
+    ASSETS.poster,
+    '部署二维码.png',
+    '果农.png',
+    '人物抠图.png',
+    '抠图.png',
+    '微信图片_20260917112834_17740_5.png',
+    '微信图片_20260917113046_17744_5.jpg'
+  ];
+  preloadList.forEach(function(src){ loadImg(src, 5000, false).catch(function(){}); });
   if(!location.hash) location.hash = '#/home';
   else router();
   // 首次打开展示项目介绍+新手引导（延迟1s避免阻塞主渲染）
