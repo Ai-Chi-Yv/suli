@@ -1028,6 +1028,26 @@ img{display:block;max-width:100%;}
   max-width:100%;border-radius:var(--radius);box-shadow:var(--shadow);
   display:block;margin:0 auto;
 }
+/* 海报底片：原生img，浏览器自带缓存/重试，无JS超时 */
+.poster-base{
+  position:relative;width:100%;max-width:680px;margin:0 auto;
+  border-radius:var(--radius);overflow:hidden;
+  background:linear-gradient(135deg,#F5A623,#FFD180);
+  box-shadow:var(--shadow);aspect-ratio:1/1;
+}
+.poster-base img{
+  display:block;width:100%;height:100%;object-fit:contain;
+  background:#FFF8E7;
+}
+.poster-base-hint{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:48px 20px 22px;
+  background:linear-gradient(180deg,rgba(20,30,10,0),rgba(20,30,10,.6));
+  color:#fff;text-align:center;pointer-events:none;
+  display:flex;flex-direction:column;gap:4px;
+}
+.poster-base-hint strong{font-size:20px;font-weight:700;}
+.poster-base-hint span{font-size:14px;opacity:.85;}
 .poster-tip{margin-top:12px;font-size:13px;color:var(--ink-soft);}
 
 .interact-share{background:#fff;}
@@ -1503,10 +1523,9 @@ var ASSETS = {
 var _imgCache = {};
 function loadImg(src, timeout, cacheBuster){
   if(_imgCache[src]) return Promise.resolve(_imgCache[src]);
-  timeout = timeout || 6000;
-  // 默认不加时间戳：让浏览器的 HTTP 缓存（Cache-Control: 1年）真正生效
-  // cacheBuster=true 时才加（开发调试用）
-  var url = (cacheBuster === false) ? src : src + (src.indexOf('?')>=0?'&':'?')+'_t='+Date.now();
+  timeout = timeout || 15000;
+  // 默认不加时间戳：让浏览器 HTTP 缓存真正生效（cacheBuster===true 才强制刷新）
+  var url = (cacheBuster === true) ? src + (src.indexOf('?')>=0?'&':'?')+'_t='+Date.now() : src;
   return new Promise(function(resolve,reject){
     var settled=false;
     var img = new Image();
@@ -1802,7 +1821,7 @@ window.addEventListener('load', function(){
     '微信图片_20260917112834_17740_5.png',
     '微信图片_20260917113046_17744_5.jpg'
   ];
-  preloadList.forEach(function(src){ loadImg(src, 5000, false).catch(function(){}); });
+  preloadList.forEach(function(src){ loadImg(src, 20000, false).catch(function(){}); });
   if(!location.hash) location.hash = '#/home';
   else router();
   // 首次打开展示项目介绍+新手引导（延迟1s避免阻塞主渲染）
@@ -4239,8 +4258,15 @@ function renderInteract(el){
     <div class="container">\
       <div class="poster-layout">\
         <div class="poster-preview">\
-          <canvas id="poster-canvas" width="1024" height="1024"></canvas>\
-          <p class="poster-tip">选择寄语后点击"生成海报"，以官方宣传海报为底片合成你的专属海报（右侧含部署二维码）</p>\
+          <div class="poster-base" id="poster-base">\
+            <img id="poster-base-img" src="宣传海报.png" alt="南安酥梨官方宣传海报" decoding="async">\
+            <div class="poster-base-hint">\
+              <strong>选择寄语，点击「生成海报」</strong>\
+              <span>合成含寄语+部署二维码的完整海报</span>\
+            </div>\
+          </div>\
+          <canvas id="poster-canvas" width="1024" height="1024" style="display:none;"></canvas>\
+          <p class="poster-tip">选择寄语后点击"生成海报"，以官方宣传海报为底片合成你的专属海报（下方含部署二维码）</p>\
         </div>\
         <div class="poster-controls-row">\
           <div class="poster-controls">\
@@ -4422,11 +4448,18 @@ function genPoster(){
   var ctx = canvas.getContext('2d');
   var btn = document.querySelector('.poster-controls .btn-primary');
   if(btn){ btn.disabled=true; var old=btn.textContent; btn.textContent='合成中…'; }
-  Promise.all([
-    loadImg(ASSETS.poster).catch(function(){return null;}),
-    loadImg(ASSETS.ip).catch(function(){return null;}),
-    loadImg('部署二维码.png').catch(function(){return null;})  // 确保QR也加载好
-  ]).then(function(imgs){
+  // 优先复用页面上浏览器原生加载的底片img（同源、已缓存、永不受JS超时影响）
+  function readyImg(id){
+    var el=document.getElementById(id);
+    return (el && el.complete && el.naturalWidth>0) ? el : null;
+  }
+  var basePoster = readyImg('poster-base-img');
+  var tasks = [
+    basePoster ? Promise.resolve(basePoster) : loadImg(ASSETS.poster, 20000, false).catch(function(){return null;}),
+    loadImg(ASSETS.ip, 20000, false).catch(function(){return null;}),
+    loadImg('部署二维码.png', 20000, false).catch(function(){return null;})
+  ];
+  Promise.all(tasks).then(function(imgs){
     if(btn){ btn.disabled=false; btn.textContent=old; }
     if(imgs[0]){
       composePoster(ctx, imgs[0], imgs[1], wish);
@@ -4434,6 +4467,9 @@ function genPoster(){
       composePosterFallback(ctx, wish);
     }
     window.__posterGenerated=true;
+    // 切换显示：隐藏原生底片，显示合成canvas
+    var base=document.getElementById('poster-base'); if(base) base.style.display='none';
+    canvas.style.display='block';
     document.getElementById('dl-btn').style.display='inline-flex';
     var tip=document.querySelector('.poster-tip'); if(tip) tip.style.display='none';
   });
@@ -4639,44 +4675,13 @@ function wrapText(ctx,text,x,y,maxW,lh){
   lines.forEach(function(l,j){ctx.fillText(l,x,startY+j*lh);});
 }
 function drawPosterPlaceholder(){
+  // 重置为"原生底片img"展示状态（不做任何异步绘制，底片由浏览器<img>直接加载，永不超时）
+  window.__posterGenerated=false;
+  var base=document.getElementById('poster-base'); if(base) base.style.display='block';
   var canvas=document.getElementById('poster-canvas');
-  var ctx=canvas.getContext('2d');
-  var W=1024, H=1024;
-  ctx.fillStyle='#FFF8E7';ctx.fillRect(0,0,W,H);
-  loadImg(ASSETS.poster).then(function(img){
-    if(window.__posterGenerated) return;
-    var pw=img.naturalWidth, ph=img.naturalHeight;
-    var scale=Math.min(W/pw, H/ph);
-    var dw=pw*scale, dh=ph*scale;
-    ctx.drawImage(img,(W-dw)/2,(H-dh)/2,dw,dh);
-    // 海报底部渐变提示文字（只覆盖海报底部，无寄语带）
-    var g=ctx.createLinearGradient(0,H*0.55,0,H);
-    g.addColorStop(0,'rgba(20,30,10,0)');g.addColorStop(1,'rgba(20,30,10,.55)');
-    ctx.fillStyle=g;ctx.fillRect(0,H*0.55,W,H*0.45);
-    ctx.fillStyle='rgba(255,255,255,.92)';
-    ctx.textAlign='center';
-    ctx.font='36px "Microsoft YaHei","PingFang SC",sans-serif';
-    ctx.fillText('选择寄语，点击「生成海报」',W/2,H-120);
-    ctx.font='26px "Microsoft YaHei","PingFang SC",sans-serif';
-    ctx.fillStyle='rgba(255,255,255,.78)';
-    ctx.fillText('合成含寄语+二维码的完整海报',W/2,H-80);
-  }).catch(function(err){
-    console.warn('海报底片加载失败，使用渐变兜底:', err.message);
-    // 1024×1024 纯色兜底海报，不含寄语带
-    var grad=ctx.createLinearGradient(0,0,W,H);
-    grad.addColorStop(0,'#E07B00');grad.addColorStop(.5,'#F5A623');grad.addColorStop(1,'#FFD180');
-    ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
-    ctx.fillStyle='#fff';
-    ctx.beginPath();ctx.arc(W/2,400,160,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='#E07B00';ctx.font='120px serif';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText('🍐',W/2,408);
-    ctx.textBaseline='alphabetic';
-    ctx.fillStyle='#fff';ctx.font='bold 72px "Microsoft YaHei","PingFang SC",sans-serif';
-    ctx.fillText('南安酥梨',W/2,640);
-    ctx.font='30px "Microsoft YaHei","PingFang SC",sans-serif';
-    ctx.fillStyle='rgba(255,255,255,.88)';
-    ctx.fillText('数字文化体验馆',W/2,690);
-  });
+  if(canvas){ canvas.style.display='none'; canvas.width=1024; canvas.height=1024; }
+  var tip=document.querySelector('.poster-tip'); if(tip) tip.style.display='block';
+  var dl=document.getElementById('dl-btn'); if(dl) dl.style.display='none';
 }
 function downloadPoster(){
   var canvas=document.getElementById('poster-canvas');
