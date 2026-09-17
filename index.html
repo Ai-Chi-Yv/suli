@@ -2,7 +2,8 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1366">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#E07B00">
 <title>南安酥梨·数字文化体验馆</title>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
@@ -960,6 +961,51 @@ img{display:block;max-width:100%;}
 .poster-qr-side canvas{border-radius:8px;display:block;margin:0 auto 6px;}
 .poster-qr-side .qr-caption{font-size:11px;color:var(--ink-soft);line-height:1.5;}
 .poster-controls h3{font-size:18px;font-weight:700;margin-bottom:16px;}
+.wish-tabs{
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;
+}
+.wish-tab{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 12px;border-radius:20px;
+  background:var(--pear-cream);border:1px solid #ead7a8;
+  font-size:12.5px;color:var(--ink);cursor:pointer;
+  transition:all .2s;font-weight:500;
+}
+.wish-tab:hover{background:#fff;border-color:var(--pear);}
+.wish-tab.active{
+  background:linear-gradient(135deg,var(--pear),var(--pear-deep));
+  color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(224,123,0,.25);
+}
+.wt-icon{font-size:14px;}
+.wish-group-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.wish-custom{
+  background:linear-gradient(135deg,#FFF8E7,#FFF);
+  border:2px dashed var(--pear);border-radius:var(--radius);
+  padding:14px;margin-bottom:12px;
+}
+.wish-custom.custom-selected{
+  background:linear-gradient(135deg,#FFE0B2,#FFF3D6);
+  border-style:solid;animation:wcPulse .3s ease;
+}
+@keyframes wcPulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.01);}
+  100%{transform:scale(1);}
+}
+#custom-wish-input{
+  width:100%;box-sizing:border-box;
+  border:1px solid #e8d9a8;border-radius:8px;
+  padding:10px 12px;font-size:14px;font-family:inherit;
+  resize:vertical;min-height:56px;
+  background:#fff;
+}
+#custom-wish-input:focus{outline:none;border-color:var(--pear);box-shadow:0 0 0 3px rgba(224,123,0,.1);}
+.wish-custom-actions{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:8px;
+}
+.wc-count{font-size:12px;color:var(--ink-soft);}
+.wc-hint{font-size:12px;color:var(--ink-soft);margin-top:8px;line-height:1.5;}
 .wish-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
 .wish-opt{
   display:flex;align-items:center;gap:10px;padding:12px 16px;
@@ -1113,6 +1159,107 @@ img{display:block;max-width:100%;}
 .bf-record-item .bfr-del:hover{background:rgba(255,82,82,.6);}
 .bf-empty{text-align:center;font-size:12px;opacity:.6;color:#fff;padding:10px 0;}
 
+/* ===== 新手引导 / 项目介绍 ===== */
+.ob-mask{
+  position:fixed;inset:0;background:rgba(0,0,0,.75);
+  z-index:9999;display:flex;align-items:center;justify-content:center;
+  animation:obFadeIn .35s ease;
+}
+@keyframes obFadeIn{from{opacity:0;}to{opacity:1;}}
+.ob-card{
+  width:min(560px,92vw);max-height:88vh;overflow:hidden;
+  background:linear-gradient(160deg,#FFFBEF,#FFF2D4 60%,#FFE0B2);
+  border-radius:24px;box-shadow:0 25px 80px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.2);
+  position:relative;
+}
+.ob-slides{
+  display:flex;transition:transform .5s cubic-bezier(.22,1,.36,1);
+}
+.ob-slide{
+  min-width:100%;padding:36px 40px 24px;box-sizing:border-box;
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+}
+.ob-slide-title{
+  font-size:26px;font-weight:800;color:#3E2723;
+  text-align:center;
+}
+.ob-slide-sub{font-size:14px;color:#8B6D3F;text-align:center;line-height:1.7;max-width:440px;}
+.ob-hero-icon{
+  width:140px;height:140px;border-radius:50%;
+  background:linear-gradient(135deg,#E07B00,#F5A623);
+  display:flex;align-items:center;justify-content:center;
+  font-size:72px;color:#fff;
+  box-shadow:0 8px 24px rgba(224,123,0,.35);
+  animation:obBounce 1.4s ease-in-out infinite;
+}
+@keyframes obBounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
+.ob-intro-list{
+  width:100%;display:flex;flex-direction:column;gap:10px;
+}
+.ob-intro-list .ob-row{
+  display:flex;gap:12px;padding:12px 14px;
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(224,123,0,.18);
+  border-radius:12px;
+}
+.ob-intro-list .ob-row .ob-ri{
+  flex-shrink:0;width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,#E07B00,#F5A623);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:16px;
+}
+.ob-intro-list .ob-row h4{
+  font-size:14px;color:#3E2723;margin:0 0 2px;font-weight:700;
+}
+.ob-intro-list .ob-row p{
+  font-size:12px;color:#8B6D3F;margin:0;line-height:1.6;
+}
+.ob-feature-grid{
+  width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px;
+}
+.ob-feat{
+  padding:14px;background:rgba(255,255,255,.6);
+  border-radius:12px;border:1px solid rgba(224,123,0,.15);
+  display:flex;flex-direction:column;gap:6px;align-items:flex-start;
+}
+.ob-feat .of-icon{font-size:28px;}
+.ob-feat .of-t{font-size:14px;font-weight:700;color:#3E2723;}
+.ob-feat .of-d{font-size:11px;color:#8B6D3F;line-height:1.5;}
+.ob-pagination{
+  display:flex;gap:8px;margin-top:4px;
+}
+.ob-pagination button{
+  width:8px;height:8px;border-radius:50%;border:none;
+  background:rgba(224,123,0,.3);cursor:pointer;padding:0;
+  transition:all .3s;
+}
+.ob-pagination button.active{background:#E07B00;width:22px;border-radius:5px;}
+.ob-footer{
+  padding:0 36px 24px;display:flex;gap:12px;justify-content:space-between;align-items:center;
+}
+.ob-footer .ob-skip{
+  background:transparent;border:none;color:#8B6D3F;font-size:13px;
+  cursor:pointer;padding:8px 14px;border-radius:8px;
+}
+.ob-footer .ob-skip:hover{background:rgba(224,123,0,.08);}
+.ob-footer .ob-next{
+  background:linear-gradient(135deg,#E07B00,#F5A623);
+  color:#fff;border:none;padding:12px 28px;border-radius:24px;
+  font-size:14px;font-weight:700;cursor:pointer;
+  box-shadow:0 4px 14px rgba(224,123,0,.3);
+  transition:transform .2s, box-shadow .2s;
+}
+.ob-footer .ob-next:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(224,123,0,.4);}
+.ob-badge-big{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 14px;border-radius:20px;
+  background:rgba(224,123,0,.1);color:#E07B00;
+  font-size:12px;font-weight:600;
+}
+
 /* ===== 梨小宝AI聊天助手（悬浮组件） ===== */
 .ai-chat-bubble{
   position:fixed;right:22px;bottom:22px;z-index:9999;
@@ -1226,6 +1373,106 @@ img{display:block;max-width:100%;}
 /* 页面切换淡入 */
 #app{animation:pageFadeIn .35s ease;}
 @keyframes pageFadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== 故事页实拍图片横条 ===== */
+.story-photo-strip{
+  margin-top:24px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  padding:0 var(--container-pad,24px);
+}
+.story-photo-strip .sp-item{
+  border-radius:12px;overflow:hidden;aspect-ratio:4/3;background:#F5E6C8;
+  box-shadow:0 4px 14px rgba(139,109,63,.15);
+  transition:transform .3s, box-shadow .3s;
+}
+.story-photo-strip .sp-item:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(139,109,63,.25);}
+.story-photo-strip .sp-item img{width:100%;height:100%;object-fit:cover;display:block;}
+@media (max-width:1024px){ .story-photo-strip{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:640px){ .story-photo-strip{grid-template-columns:repeat(2,1fr);gap:8px;} .story-photo-strip .sp-item{aspect-ratio:1/1;} }
+
+/* ====== 移动端 / 平板端 响应式适配 ====== */
+@media (max-width: 1024px){
+  .container{padding:0 18px;}
+}
+@media (max-width: 640px){
+  html{font-size:14px;}
+  body{overflow-x:hidden;}
+  .container{padding:0 14px;max-width:100%;}
+  /* 导航栏：横向滚动 */
+  .nav-bar{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 8px;}
+  .nav-bar::-webkit-scrollbar{display:none;}
+  .nav-bar .nav-inner{flex-wrap:nowrap;min-width:max-content;gap:4px;}
+  .nav-bar .nav-inner .nav-item{padding:10px 12px;font-size:13px;border-radius:16px;}
+  /* 首页大标题缩小 */
+  .hero h1{font-size:26px;line-height:1.3;}
+  .hero p{font-size:13px;}
+  /* 卡片网格：从3列→1列 */
+  .grid-3{grid-template-columns:1fr!important;gap:12px;}
+  .grid-2{grid-template-columns:1fr!important;gap:12px;}
+  /* section padding 缩小 */
+  .section{padding:28px 0;}
+  .section-title h2{font-size:20px;}
+  .section-title p{font-size:13px;}
+  /* Canvas 海报自适应（关键！） */
+  .poster-layout{display:block;}
+  .poster-preview{max-width:100%;margin:0 auto;overflow:hidden;border-radius:var(--radius);}
+  .poster-preview canvas{display:block;width:100%!important;height:auto!important;}
+  .poster-controls-row{display:block;margin-top:14px;}
+  .poster-controls{width:100%;margin-bottom:14px;}
+  .poster-qr-side{width:100%;display:flex;flex-direction:column;align-items:center;padding:14px;}
+  /* 寄语Tab：横向可滚动 */
+  .wish-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:6px;}
+  .wish-tabs::-webkit-scrollbar{display:none;}
+  .wish-tab{flex-shrink:0;padding:6px 10px;font-size:12px;}
+  /* 扫码区 */
+  .scan-area .scan-viewport{width:100%;height:260px;}
+  /* Agent 在移动端：底部抽屉式 */
+  .ai-chat-bubble{width:56px;height:56px;font-size:26px;right:16px;bottom:calc(20px + env(safe-area-inset-bottom));box-shadow:0 4px 16px rgba(224,123,0,.35);}
+  .ai-chat-panel{
+    right:0!important;left:0!important;bottom:0!important;
+    width:100%!important;max-width:100%!important;height:72vh;max-height:80vh;
+    border-radius:16px 16px 0 0;
+    transform-origin:bottom center;transform:translateY(100%);opacity:1;pointer-events:none;
+    transition:transform .3s cubic-bezier(.22,1,.36,1),opacity .18s ease;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .ai-chat-panel.open{transform:translateY(0);opacity:1;pointer-events:auto;}
+  .ai-chat-head{padding:14px 18px 14px;}
+  .ai-chat-body{padding:10px 12px;}
+  .ai-chat-input{padding:10px 12px;gap:8px;}
+  .ai-chat-input textarea{font-size:16px;max-height:90px;}
+  .ai-chat-send{width:46px;height:46px;font-size:18px;}
+  /* 引导弹窗：手机全宽 */
+  .ob-card{width:100%;max-height:100vh;border-radius:0;border-top-left-radius:16px;border-top-right-radius:16px;bottom:0;position:fixed;transform:none;}
+  .ob-slides .ob-slide{padding:20px;gap:10px;}
+  .ob-hero-icon{width:90px;height:90px;font-size:46px;}
+  .ob-slide-title{font-size:20px;}
+  .ob-slide-sub{font-size:12px;}
+  .ob-feature-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .ob-intro-list .ob-row{padding:10px;gap:8px;}
+  .ob-intro-list .ob-row .ob-ri{width:30px;height:30px;font-size:13px;flex-shrink:0;}
+  .ob-footer{padding:14px 20px;}
+  /* 证书 */
+  .cert-area canvas{max-width:100%!important;height:auto!important;}
+  /* 团队卡片：2→1 */
+  .team-members .member-card{width:100%;}
+  /* 效益页 ROI 卡 */
+  .roi-row{grid-template-columns:1fr 1fr!important;gap:10px;}
+  /* 回到顶部按钮 */
+  #back-top{right:14px;bottom:14px;width:44px;height:44px;font-size:18px;}
+  /* 底部留白：避免底部被导航栏遮挡 */
+  body{padding-bottom:env(safe-area-inset-bottom);}
+}
+@media (max-width: 380px){
+  .roi-row{grid-template-columns:1fr!important;}
+  .ob-feature-grid{grid-template-columns:1fr!important;}
+}
+/* 横屏手机 */
+@media (max-height: 480px) and (orientation: landscape){
+  .ob-card{max-height:100vh;overflow-y:auto;}
+  .ob-hero-icon{width:64px;height:64px;font-size:34px;}
+  .ob-feature-grid{grid-template-columns:repeat(3,1fr);}
+}
 </style>
 </head>
 <body>
@@ -1256,34 +1503,44 @@ var ASSETS = {
 var _imgCache = {};
 function loadImg(src, timeout){
   if(_imgCache[src]) return Promise.resolve(_imgCache[src]);
-  timeout = timeout || 6000;
+  timeout = timeout || 8000;
+  // 策略：先fetch为Blob（彻底绕开crossOrigin/CORS），再生成object URL赋给Image
   return new Promise(function(resolve,reject){
-    var img = new Image();
-    // 注意：先不加crossOrigin，onload后再设置（规避Python http.server无CORS头导致onerror）
     var settled=false;
-    var timer = setTimeout(function(){
-      if(!settled){ settled=true; reject(new Error('图片加载超时(6s):'+src)); img.src=''; }
-    }, timeout);
-    img.onload = function(){
-      if(settled) return; settled=true; clearTimeout(timer);
-      // 尝试设crossOrigin（可能失败但onload已触发，图片数据仍可用）
-      try{ img.crossOrigin='anonymous'; }catch(e){}
-      _imgCache[src]=img; resolve(img);
-    };
-    img.onerror = function(){
-      if(settled) return; settled=true; clearTimeout(timer);
-      // onerror时：尝试不带crossOrigin重新加载（Python http.server无CORS头会导致带crossOrigin时onerror）
-      if(!img._noCORS){
-        var retry=new Image();
-        retry.onload=function(){ settled=true; clearTimeout(timer); _imgCache[src]=retry; resolve(retry); };
-        retry.onerror=function(){ if(!settled){ settled=true; clearTimeout(timer); reject(new Error('图片加载失败(重试也失败):'+src)); } };
-        retry._noCORS=true;
-        retry.src = src + (src.indexOf('?')>=0?'&':'?')+'_t='+Date.now()+'r';
-      } else {
-        reject(new Error('图片加载失败:'+src));
-      }
-    };
-    img.src = src + (src.indexOf('?')>=0?'&':'?')+'_t='+Date.now();
+    var timer=setTimeout(function(){
+      if(!settled){ settled=true; reject(new Error('图片加载超时:'+src)); }
+    },timeout);
+    var url = src + (src.indexOf('?')>=0?'&':'?')+'_t='+Date.now();
+    fetch(url, {mode:'cors'}).then(function(resp){
+      if(!resp.ok) throw new Error('HTTP '+resp.status);
+      return resp.blob();
+    }).then(function(blob){
+      var objURL = URL.createObjectURL(blob);
+      var img = new Image();
+      img.onload=function(){
+        if(settled) return; settled=true; clearTimeout(timer);
+        img.crossOrigin='anonymous'; // 让canvas能读取像素
+        _imgCache[src]=img; resolve(img);
+      };
+      img.onerror=function(){
+        if(settled) return; settled=true; clearTimeout(timer);
+        reject(new Error('Image解码失败:'+src));
+      };
+      img.src = objURL;
+    }).catch(function(err){
+      // fetch失败时降级：用默认Image加载（不带crossOrigin）
+      if(settled) return;
+      var img=new Image();
+      img.onload=function(){
+        if(settled) return; settled=true; clearTimeout(timer);
+        _imgCache[src]=img; resolve(img);
+      };
+      img.onerror=function(){
+        if(settled) return; settled=true; clearTimeout(timer);
+        reject(new Error('图片加载失败(fetch+fallback都不行):'+src+' '+err.message));
+      };
+      img.src=url;
+    });
   });
 }
 
@@ -1341,6 +1598,161 @@ function navigate(hash){
   showPageProgress();
   location.hash = hash;
 }
+/* ===== 新手引导 ===== */
+var __obSlide = 0;
+var OB_SLIDES = [
+  // 第1页：项目介绍
+  {
+    icon:'🍐', title:'南安酥梨 · 数字文化体验馆',
+    sub:'一款以"数字文化双轮驱动"助力乡村振兴的互动体验单页应用',
+    body:'<div class="ob-badge-big">🌱 乡村振兴 · 数字赋能</div>\
+      <div class="ob-intro-list" style="margin-top:12px;">\
+        <div class="ob-row"><div class="ob-ri">①</div><div><h4>项目背景</h4><p>山西吕梁文水县南安镇，明清贡品"南安酥梨"原产地，国家地理标志产品，种植历史超400年</p></div></div>\
+        <div class="ob-row"><div class="ob-ri">②</div><div><h4>四大数字技术</h4><p>物联网溯源 · 大数据产销 · 共享云冷链 · 直播数字化，叠加梨小宝IP品牌赋能</p></div></div>\
+        <div class="ob-row"><div class="ob-ri">③</div><div><h4>三年振兴路径</h4><p>试点期→推广期→成熟期，带动300+农户增收，收购价从3.2元/斤提升至6.8元/斤</p></div></div>\
+      </div>'
+  },
+  // 第2页：核心功能亮点
+  {
+    icon:'✨', title:'六大核心体验，等你发现',
+    sub:'从溯源扫码到认领梨树，从梨王挑战到情感海报，沉浸式玩转整个梨乡',
+    body:'<div class="ob-feature-grid">\
+      <div class="ob-feat"><span class="of-icon">🔍</span><span class="of-t">一物一码溯源</span><span class="of-d">扫码看种植→质检→冷链全链路</span></div>\
+      <div class="ob-feat"><span class="of-icon">🌳</span><span class="of-t">认领专属梨树</span><span class="of-d">生成专属编号+二维码，守护梨园</span></div>\
+      <div class="ob-feat"><span class="of-icon">🏆</span><span class="of-t">梨王宝藏挑战</span><span class="of-d">5关剧本答题，赢梨王证书</span></div>\
+      <div class="ob-feat"><span class="of-icon">🎨</span><span class="of-t">情感海报生成</span><span class="of-d">情侣/闺蜜/兄弟/亲人 22条+自定义</span></div>\
+      <div class="ob-feat"><span class="of-icon">🤖</span><span class="of-t">AI Agent 梨小宝</span><span class="of-d">13+页面工具，能问能答能操作</span></div>\
+      <div class="ob-feat"><span class="of-icon">💰</span><span class="of-t">效益数据看板</span><span class="of-d">IRR38% · 估值6000万 · 三年模型</span></div>\
+    </div>'
+  },
+  // 第3页：引导操作
+  {
+    icon:'🤖', title:'现在就开始探索吧！',
+    sub:'右下角的梨小宝Agent随时待命，你可以直接对话让它帮你完成操作',
+    body:'<div class="ob-intro-list">\
+      <div class="ob-row"><div class="ob-ri">💑</div><div><h4>对情侣说："帮我给女朋友生成一张海报"</h4><p>Agent会自动切到情侣寄语Tab，选甜蜜语录并合成海报</p></div></div>\
+      <div class="ob-row"><div class="ob-ri">🌳</div><div><h4>说："认领一棵梨树同时生成海报"</h4><p>Agent一条龙帮你认领+生成守护梨园主题海报</p></div></div>\
+      <div class="ob-row"><div class="ob-ri">📅</div><div><h4>说："现在酥梨是什么时令"</h4><p>Agent会根据当前月份告诉你南安酥梨正处于早熟/黄金期/储藏期等</p></div></div>\
+      <div class="ob-row"><div class="ob-ri">📖</div><div><h4>不知道怎么操作？直接问</h4><p>"怎么认领梨树"/"怎么生成海报"，Agent会温和引导并打开对应页面</p></div></div>\
+    </div>'
+  }
+];
+function showOnboardingIfNew(){
+  var LAST_SEEN_KEY = 'pear_last_seen';    // 上次登录时间戳
+  var OB_SHOWN_KEY  = 'pear_ob_shown';     // 引导是否已看过
+  var LONG_GAP_MS   = 30 * 24 * 3600 * 1000; // 30天未登录视为"老用户回流"，重置引导
+  var now = Date.now();
+  var lastSeen = parseInt(localStorage.getItem(LAST_SEEN_KEY)||'0');
+  var obShown  = localStorage.getItem(OB_SHOWN_KEY);
+  // 如果长时间没登录（>30天），视为新用户，重置引导标记
+  if(lastSeen > 0 && (now - lastSeen) > LONG_GAP_MS){
+    obShown = null; // 强制弹引导
+  }
+  // 先更新"最后登录时间"
+  localStorage.setItem(LAST_SEEN_KEY, now.toString());
+  // 决定是否弹引导
+  if(obShown){ return; }          // 近期来过，不弹
+  localStorage.setItem(OB_SHOWN_KEY, '1'); // 标记为已看过
+  showOnboarding();
+}
+/* 主动重置（调试/运营用：在控制台执行 resetOnboarding() 即可下次访问重新弹） */
+function resetOnboarding(){
+  localStorage.removeItem('pear_ob_shown');
+  localStorage.removeItem('pear_last_seen');
+}
+/* 设备检测：给body加 device-desktop / device-tablet / device-mobile class */
+function detectDevice(){
+  var ua = navigator.userAgent || '';
+  var isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  var w = window.innerWidth;
+  var body = document.body;
+  body.classList.remove('device-desktop','device-tablet','device-mobile');
+  if(w <= 640){
+    body.classList.add('device-mobile');
+  } else if(w <= 1024){
+    body.classList.add('device-tablet');
+  } else {
+    body.classList.add('device-desktop');
+  }
+  // 额外信息（调试用，在控制台可读）
+  window.__DEV = {
+    width:w, height:window.innerHeight, ua:ua, touch:isTouch,
+    isMobile:/iPhone|Android.*Mobile|Windows Phone|Mobile/i.test(ua),
+    isTablet:/iPad|Android(?!.*Mobile)|Tablet/i.test(ua)
+  };
+  // 通知所有ECharts实例重新渲染（窗口尺寸变了）
+  Object.keys(_echartInstances||{}).forEach(function(id){
+    var c=_echartInstances[id];
+    if(c && typeof c.resize==='function'){
+      try{ c.resize(); }catch(e){}
+    }
+  });
+}
+function showOnboarding(){
+  __obSlide=0;
+  if(document.getElementById('ob-mask')) return;
+  var mask=document.createElement('div');
+  mask.id='ob-mask';
+  mask.className='ob-mask';
+  mask.innerHTML='\
+  <div class="ob-card">\
+    <div class="ob-slides" id="ob-slides">\
+      '+OB_SLIDES.map(function(s){
+        return '<div class="ob-slide">\
+          <div class="ob-hero-icon">'+s.icon+'</div>\
+          <div class="ob-slide-title">'+s.title+'</div>\
+          <div class="ob-slide-sub">'+s.sub+'</div>\
+          '+s.body+'\
+        </div>';
+      }).join('')+'\
+    </div>\
+    <div style="text-align:center;">\
+      <div class="ob-pagination" id="ob-pages">\
+        '+OB_SLIDES.map(function(_,i){return '<button class="'+(i===0?'active':'')+'" data-i="'+i+'"></button>';}).join('')+'\
+      </div>\
+    </div>\
+    <div class="ob-footer">\
+      <button class="ob-skip" id="ob-skip">跳过，直接进入 →</button>\
+      <button class="ob-next" id="ob-next">下一步 →</button>\
+    </div>\
+  </div>';
+  document.body.appendChild(mask);
+  // 绑定事件
+  mask.querySelector('#ob-next').onclick = function(){
+    if(__obSlide < OB_SLIDES.length-1){
+      __obSlide++;
+      var slides=mask.querySelector('#ob-slides');
+      slides.style.transform = 'translateX(-'+(__obSlide*100)+'%)';
+      var pages=mask.querySelectorAll('#ob-pages button');
+      pages.forEach(function(b,i){b.classList.toggle('active',i===__obSlide);});
+      mask.querySelector('#ob-next').textContent = __obSlide===OB_SLIDES.length-1 ? '开始探索 🚀' : '下一步 →';
+      mask.querySelector('#ob-skip').textContent = __obSlide===OB_SLIDES.length-1 ? '' : '跳过，直接进入 →';
+    } else {
+      closeOnboarding();
+    }
+  };
+  mask.querySelector('#ob-skip').onclick = closeOnboarding;
+  mask.querySelectorAll('#ob-pages button').forEach(function(b){
+    b.onclick = function(){
+      __obSlide = parseInt(b.dataset.i);
+      var slides=mask.querySelector('#ob-slides');
+      slides.style.transform = 'translateX(-'+(__obSlide*100)+'%)';
+      var pages=mask.querySelectorAll('#ob-pages button');
+      pages.forEach(function(pi,i){pi.classList.toggle('active',i===__obSlide);});
+      mask.querySelector('#ob-next').textContent = __obSlide===OB_SLIDES.length-1 ? '开始探索 🚀' : '下一步 →';
+      mask.querySelector('#ob-skip').textContent = __obSlide===OB_SLIDES.length-1 ? '' : '跳过，直接进入 →';
+    };
+  });
+}
+function closeOnboarding(){
+  var m=document.getElementById('ob-mask'); if(m) m.remove();
+}
+/* 允许用户主动再次看引导 */
+function reshowOnboarding(){
+  var m=document.getElementById('ob-mask'); if(m) m.remove();
+  showOnboarding();
+}
+
 function showPageProgress(){
   var bar=document.getElementById('page-progress');
   if(!bar){
@@ -1402,12 +1814,17 @@ function router(){
 
 window.addEventListener('hashchange', router);
 window.addEventListener('load', function(){
+  detectDevice();
+  window.addEventListener('resize', detectDevice);
   renderNav();
   // 预加载本地素材（失败静默，不影响主流程）
   loadImg(ASSETS.ip).catch(function(){});
   loadImg(ASSETS.poster).catch(function(){});
+  loadImg('部署二维码.png').catch(function(){});
   if(!location.hash) location.hash = '#/home';
   else router();
+  // 首次打开展示项目介绍+新手引导（延迟1s避免阻塞主渲染）
+  setTimeout(showOnboardingIfNew, 900);
 });
 
 /* ---------- 4. ECharts 安全调用 ---------- */
@@ -1539,6 +1956,13 @@ function renderStory(el){
       <span class="eyebrow">文化轮 · 地域文化赋能</span>\
       <h2 class="story-h2">吕梁山下的甜蜜坚守</h2>\
       <p class="story-lead">山西文水南安镇，地处吕梁山东麓，汾河谷地。这里日照充足、昼夜温差大，是酥梨黄金产区。百年来，南安人民以吕梁精神为魂、以晋商诚信为骨，种出了一颗颗金黄酥甜的好梨。</p>\
+    </div>\
+    <!-- 实拍图片横条 -->\
+    <div class="story-photo-strip">\
+      <div class="sp-item"><img src="微信图片_20260917112834_17740_5.png"></div>\
+      <div class="sp-item"><img src="微信图片_20260917113046_17744_5.jpg"></div>\
+      <div class="sp-item"><img src="人物抠图.png"></div>\
+      <div class="sp-item"><img src="抠图.png"></div>\
     </div>\
   </div>\
   <div class="section">\
@@ -2296,11 +2720,47 @@ var PEAR_KB = [
   {keys:['什么时候','开始','年份','1980','1990','2000','2010','历史','时间'], reply:'南安酥梨发展时间轴：1980年代引种试种；1990年代规模扩展，成为主要收入来源；2000年代支柱形成，但品牌短板显现；2010年代优质不优价、直播混乱等困境集中爆发；2024年数字文化双轮驱动计划启动，物联网+IP+大数据全面赋能。', quick:['为什么2024年才开始','之前做什么']},
   {keys:['冰糖烤梨','怎么做','做法','食谱','菜谱','梨的吃法','怎么吃'], reply:'冰糖烤梨是梨乡传统药膳！做法：选南安酥梨一个，顶部切盖去核，填入川贝3g、冰糖20g、红枣2颗（可选枸杞、银耳），盖回顶盖，碗装水没过梨身1/3，烤箱160℃或蒸锅100℃，1.5小时即可。止咳化痰、润肺养颜，秋冬季必备。', quick:['好吃吗','酥梨怎么做更好吃']},
   {keys:['你是谁','你叫什么','你能做什么','功能','有什么用','机器人','智能'], reply:'我是梨小宝🍐，南安酥梨数字文化体验馆的AI助手！我能回答：南安酥梨的品种/营养价值/历史，梨小宝IP是什么，溯源系统怎么用，怎么认领梨树，梨王挑战怎么玩，海报怎么生成，团队情况和未来规划等。点击下方快捷问题试试～', quick:['帮我看看首页','回到首页']},
+  {keys:['体验','去看看','进入','跳转','页面','怎么去','浏览'], reply:'好呀！你想体验哪个功能？下面是快捷入口：\n• 溯源扫码：点击导航栏"溯源体验"即可扫码\n• 认领梨树+梨王挑战：点击"沉浸体验"\n• 生成海报+点赞分享：点击"沉浸体验"\n• 团队与展望：点击"团队展望"', quick:['溯源体验','沉浸体验']},
+  {keys:['酥梨多少钱一斤','多少钱一斤','价格','批发价','市场价','一斤多少钱','礼盒多少钱','怎么卖'], reply:'南安酥梨零售参考价：\n• 精选果：9.9元/斤（线上电商）\n• 优享礼盒：99元/10斤（品牌溢价2倍）\n• 梨王礼盒：299元/颗（单果800g+精品）\n\n2023年果农收购价仅3.2元/斤，项目通过IP+溯源赋能，2024年收购价提升至6.8元/斤。', quick:['怎么盈利','直播运营']},
+  {keys:['梨的品种','品种','是什么品种','有几种','酥梨品种','品系'], reply:'南安酥梨属于白梨系统中的"酥梨"品种（Pyrus bretschneideri Rehd.），原产地安徽砀山，经山西吕梁400多年风土驯化，形成独一无二的"南安风味"——皮更薄、汁更浓、糖度可达15°+，明显区别于普通酥梨。', quick:['营养价值','有什么好处']},
+  {keys:['农户','农民','多少农户','农户增收','带动','扶贫','乡村振兴'], reply:'项目直接带动文水县南安镇300+农户增收：\n• 2023年收购价3.2元/斤 → 2024年6.8元/斤\n• 户均增收4300元/年\n• 试点期带动3户直播运营 → 推广期50户参与\n• 成熟期300户覆盖全产业链\n\n是"数字文化双轮驱动"助力乡村振兴的典型案例。', quick:['未来规划','三年振兴路径']},
+  {keys:['直播','直播运营','怎么直播','谁在直播','直播怎么做','直播带货'], reply:'项目搭建了AI辅助的直播数字化体系：\n• 42场直播，累计卖出1.2万斤酥梨\n• 单场最高8600人次观看\n• AI自动选品+智能定价后台\n• 农户培训后自主开播\n• 直播三档定价：精选果9.9/优享礼盒99/梨王礼盒299\n\n想了解更多？让Agent帮你"去效益页看看"。', quick:['效益数据','三年财务']},
+  {keys:['云冷链','冷链','冷库','共享云冷链是什么'], reply:'共享云冷链是项目四大数字技术之一：合作社共建一座1500吨冷库，错峰上市保价——9月采收入库，11-12月竞品稀少时出库销售，售价可高出30%。同时冷链全程联网溯源，消费者扫码可看运输温度曲线。', quick:['还有什么技术','物联网溯源']},
+  {keys:['AI在做什么','人工智能','大数据','AI能干嘛','智能'], reply:'项目中的AI应用：\n① 大数据产销分析：AI预测各地区酥梨需求，指导种植和直播备货\n② AI智能定价：根据供需动态调整三档礼盒价格\n③ AI自动选品后台：直播时AI推荐当季最优产品\n④ Agent（梨小宝）：就是正在跟你对话的这个AI，能问答、能操作页面、会调用工具\n\n说"帮我生成海报"试试我的能力！', quick:['你能做什么','帮我操作一下']},
+  {keys:['证书','梨王证书','下载证书','电子证书'], reply:'"寻找梨王宝藏"挑战全部答对5题后，系统会为你生成专属电子证书——Canvas实时绘制，梨小宝IP在左、梨王徽章在右、中间是你的评级（梨王/梨乡能手/梨园新星）和日期。点击"沉浸体验"进入挑战吧！', quick:['我也想当梨王','去体验页']},
+  {keys:['礼盒','包装','梨享礼盒','设计','品牌设计'], reply:'梨小宝IP衍生四层产品矩阵：\n① 基础鲜果（70%营收，用品牌溯源卡包装）\n② 梨享礼盒（99元/10斤，品牌溢价2倍）\n③ 深加工：梨膏/冻干梨片/梨汁（毛利率45%）\n④ 日化延伸：梨汁保湿面膜（研发中）\n\n想设计你自己的包装？让Agent帮你"生成一张专属海报"！', quick:['生成海报','未来有什么产品']},
+  {keys:['证书下载','怎么下载海报','怎么保存','怎么保存图片','怎么下'], reply:'在Canvas海报/证书上右键→"图片另存为"即可保存PNG。Agent生成海报后会出现"下载PNG"按钮，点击自动下载。\n\n如果Canvas因跨域污染无法直接下载（极少数浏览器情况），Agent会降级在新窗口打开图片，右键保存即可。', quick:['帮我生成一张','下载证书']},
+  {keys:['地址','在哪里','南安镇','文水','怎么走','交通','怎么去'], reply:'南安酥梨基地位于山西省吕梁市文水县南安镇，距离文水县城约15公里，太原市约90公里。\n\n🚗 自驾：太原→青银高速→文水出口→南安镇\n🚄 高铁：太原南→文水站（约40分钟）\n\n欢迎预约考察！Agent可以帮你"打开预约表单"。', quick:['预约考察','团队联系方式']},
+  {keys:['电话','联系方式','邮箱','怎么联系','团队电话','号码'], reply:'项目联系方式：\n📞 咨询电话：0358-3000000\n📧 邮箱：contact@nananpear.cn\n📍 地址：山西省吕梁市文水县南安镇酥梨基地\n\nAgent可以直接帮你"打开预约表单"或者生成联系卡片。', quick:['我要预约考察','团队介绍']},
+  {keys:['未来规划','什么时候','三年振兴','后面怎么做','继续什么'], reply:'三年振兴路径：\n🔹 第一年（试点期）：3户直播、溯源上线、梨小宝IP发布、42场直播卖1.2万斤\n🔹 第二年（推广期）：50户农户覆盖、共享云冷链、四季文旅、梨膏深加工\n🔹 第三年（成熟期）：300户增收、四层产品矩阵、"南安模式"输出准备、天使轮退出（估值6000万）', quick:['财务数据','未来会去哪里']},
+  {keys:['为什么叫南安','南安镇名字','为什么叫酥梨','名字由来'], reply:'"南安"二字：取"南方安定"之意，明清时期这里是晋商货物集散地，酥梨通过汾河漕运南下，成为皇家贡品。\n\n"南安酥梨"四个字已获国家地理标志保护（2023年），原产地仅限文水县南安镇及周边3个行政村，超过这个范围再甜也不能叫"南安酥梨"。', quick:['有什么历史','什么时候开始种的']},
+  {keys:['认证','标准','地理标志','绿色认证','有机'], reply:'南安酥梨已获三重认证：\n✅ 国家地理标志产品（2023年）\n✅ 绿色食品A级认证\n✅ 农产品溯源体系认证\n\n每颗梨的溯源码格式为 NA-PEAR-年份-4位数字，扫码可查全部档案。', quick:['怎么扫码','一物一码是什么意思']},
+  {keys:['你好','hi','hello','在吗','嗨','您好'], reply:'你好呀！我是梨小宝🍐，南安酥梨数字文化体验馆的AI助手。我可以告诉你关于南安酥梨的品种、溯源、认领梨树、梨王挑战等信息，想问什么尽管说～', quick:['南安酥梨是什么','怎么认领梨树','溯源系统']},
+  {keys:['南安酥梨','是什么','介绍','哪里的','产地','山西','吕梁','文水'], reply:'南安酥梨产自山西吕梁文水县南安镇，是明清贡品、国家地理标志产品。梨果大形正、皮薄肉厚、酥脆多汁，果形指数95%以上，含糖量12-14°。种植历史超400年，2024年带动300+农户增收。', quick:['有什么营养价值','种植历史']},
+  {keys:['营养','营养价值','维生素','好处','功效','吃梨','润肺','止咳'], reply:'南安酥梨富含维生素B族、维C、钾元素和膳食纤维，梨汁润肺止咳、化痰降火，是秋季养生佳品。冰糖烤梨更是梨乡传统药膳——去核后填入川贝、冰糖、红枣，文火慢炖，秋冬季老少皆宜。', quick:['怎么吃','冰糖烤梨']},
+  {keys:['梨小宝','IP','形象','吉祥物','品牌'], reply:'梨小宝是南安酥梨的品牌IP形象🍐，一个头戴梨叶、身穿背带裤的卡通梨女孩。她代表南安酥梨"健康、甜美、可爱"的品牌调性，出现在首页、海报、证书、点赞区等体验馆各个角落。', quick:['能下载海报吗','做什么用的']},
+  {keys:['溯源','追溯','扫码','二维码','从哪来','哪里产的'], reply:'南安酥梨采用"一物一码"全链路溯源系统：扫码即可查看这颗梨的种植基地、品种、套袋日期、质检报告、运输冷链等全部信息。点击"溯源体验"进入，可用摄像头扫码、上传二维码图片，或使用演示模式。溯源码格式为 NA-PEAR-年份-4位数字 。', quick:['怎么扫码','试一下演示']},
+  {keys:['认领','梨树','种树','我的梨树','领养'], reply:'点击"沉浸体验"页面，在"认领一棵专属梨树"区域点击"立即认领"即可生成你的专属编号（NA-PEAR-年份-4位数字）和专属二维码。认领信息会保存在你的浏览器里，随时查看。未来认养的梨树可以通过溯源码追踪生长状态。', quick:['去体验一下','有什么好处']},
+  {keys:['梨王','挑战','答题','游戏','证书'], reply:'"寻找梨王宝藏"是一个5关剧本挑战游戏，点击"沉浸体验"页面即可开始。每答一题得一枚印章，全部答对评级为"南安酥梨·梨王"，可以下载专属梨王证书Canvas图片。答3题以上为"梨乡能手"，1-2题为"梨园新星"。', quick:['我也想当梨王','试玩一下']},
+  {keys:['海报','下载','生成','寄语'], reply:'点击"沉浸体验"页面，在"生成你的南安酥梨海报"区域选择一句寄语，点击"生成海报"即可合成一张专属海报——以真实宣传海报为底片，叠加梨小宝头像、你的寄语和日期。可以下载PNG保存分享。', quick:['帮我生成一张','有哪些寄语']},
+  {keys:['团队','人员','几个人','成员','队长','谁做的'], reply:'项目由三人核心团队协作：①基地负责人统筹种植运营、品控和农户协调；②数字技术官负责溯源SaaS、大数据、直播运营；③品牌财务官主导梨小宝IP、礼盒策划和融资财务。三人跨岗融合，覆盖全产业链。', quick:['财务数据怎么样','未来规划']},
+  {keys:['融资','钱','财务','营收','盈利','投资','收入','利润'], reply:'项目融资300万元，三年财务模型：第一年营收468万、净利润-50万（跑通模型）；第二年营收1345万、净利润131万（规模初显）；第三年营收2330万、净利润439万，IRR38%，天使轮退出估值6000万元。', quick:['怎么盈利','为什么可行']},
+  {keys:['未来','展望','规划','什么时候','三年','发展'], reply:'三年振兴路径：第一年试点期（3户直播、溯源上线、梨小宝IP发布）；第二年推广期（50户农户、共享云冷链、四季文旅、深加工）；第三年成熟期（300户增收、四层产品矩阵、"南安模式"输出准备、天使轮退出）。最终目标是把"数字文化双轮驱动"模式复制到全国其他农产品产区。', quick:['会去哪里','有什么产品']},
+  {keys:['产品','礼盒','梨膏','深加工','卖什么','梨享','四层'], reply:'四层产品矩阵：①基础鲜果（70%营收）；②梨享礼盒（品牌溢价2倍）；③梨膏/冻干梨片/梨汁（深加工毛利率45%）；④梨汁保湿面膜等日化延伸。其中冻干梨片是项目研发的明星产品，低糖保留90%营养。', quick:['面膜怎么卖','礼盒多少钱']},
+  {keys:['产业','问题','困境','为什么失败','不好卖','痛点','品牌'], reply:'南安酥梨曾面临"优质不优价、品牌散装、直播定价混乱"三大困境，2023年果农收购价仅3.2元/斤。项目通过"物联网溯源+大数据产销+共享云冷链+直播数字化"四大数字技术，叠加梨小宝IP，让收购价提升到6.8元/斤。', quick:['怎么解决的','云冷链是什么']},
+  {keys:['什么时候','开始','年份','1980','1990','2000','2010','历史','时间'], reply:'南安酥梨发展时间轴：1980年代引种试种；1990年代规模扩展，成为主要收入来源；2000年代支柱形成，但品牌短板显现；2010年代优质不优价、直播混乱等困境集中爆发；2024年数字文化双轮驱动计划启动，物联网+IP+大数据全面赋能。', quick:['为什么2024年才开始','之前做什么']},
+  {keys:['冰糖烤梨','怎么做','做法','食谱','菜谱','梨的吃法','怎么吃'], reply:'冰糖烤梨是梨乡传统药膳！做法：选南安酥梨一个，顶部切盖去核，填入川贝3g、冰糖20g、红枣2颗（可选枸杞、银耳），盖回顶盖，碗装水没过梨身1/3，烤箱160℃或蒸锅100℃，1.5小时即可。止咳化痰、润肺养颜，秋冬季必备。', quick:['好吃吗','酥梨怎么做更好吃']},
+  {keys:['你是谁','你叫什么','你能做什么','功能','有什么用','机器人','智能'], reply:'我是梨小宝🍐，南安酥梨数字文化体验馆的AI助手！我能回答：南安酥梨的品种/营养价值/历史，梨小宝IP是什么，溯源系统怎么用，怎么认领梨树，梨王挑战怎么玩，海报怎么生成，团队情况和未来规划等。点击下方快捷问题试试～', quick:['帮我看看首页','回到首页']},
   {keys:['体验','去看看','进入','跳转','页面','怎么去','浏览'], reply:'好呀！你想体验哪个功能？下面是快捷入口：\n• 溯源扫码：点击导航栏"溯源体验"即可扫码\n• 认领梨树+梨王挑战：点击"沉浸体验"\n• 生成海报+点赞分享：点击"沉浸体验"\n• 团队与展望：点击"团队展望"', quick:['溯源体验','沉浸体验']}
 ];
 
 /* ========== 梨小宝 Agent 运行时 ========== */
-var agentCtx = {lastIntent:null, lastArgs:null, turn:0, busy:false};
+var agentCtx = {
+  lastIntent:null, lastArgs:null, turn:0, busy:false,
+  lastWishGroup:null, // 上一个寄语分组（多轮用："换一个" → 同组下一条）
+  lastPosterWishIdx:null, // 上次海报用的wishIdx
+  recent:[] // 最近5轮历史 {intent, text}
+};
 var THINK_POOL = ['正在理解你的问题…','检索梨乡知识库…','调用页面工具中…','规划执行步骤…','核对南安酥梨数据…'];
 var AI_STORE_KEY = 'pear_ai_chat';
 
@@ -2368,13 +2828,18 @@ var AGENT_TOOLS = {
   poster: function(args, done){
     navigateAndRun('#/interact', function(){
       try{
-        var idx = (typeof args.wishIdx==='number') ? args.wishIdx : 0;
-        if(typeof selectWish==='function') selectWish(idx);
+        // 支持自定义寄语字符串（情感海报更灵活）
+        if(typeof args.customWish==='string' && args.customWish.trim()){
+          __wishType='custom'; __customWish=args.customWish.trim();
+        } else {
+          var idx = (typeof args.wishIdx==='number') ? args.wishIdx : 0;
+          if(typeof selectWish==='function') selectWish(idx);
+        }
         setTimeout(function(){
           if(typeof genPoster==='function') genPoster();
           var c=document.getElementById('poster-canvas'); if(c) c.scrollIntoView({block:'center'});
-          done({ok:true, wishIdx:idx, wish:(typeof WISHES!=='undefined'?WISHES[idx]:'')});
-        }, 200);
+          done({ok:true});
+        }, 120);
       }catch(e){ done({ok:false}); }
     });
   },
@@ -2402,6 +2867,35 @@ var AGENT_TOOLS = {
     var url = location.origin+location.pathname+'#/home';
     copyTextToClipboard(url).then(function(){ done({ok:true, url:url}); })
       .catch(function(){ done({ok:false}); });
+  },
+  /* 切到指定寄语分组 + 选第一条 */
+  select_wish_group: function(args, done){
+    var gi = typeof args.gi==='number' ? args.gi : WISH_GROUPS.findIndex(function(g){ return g.tab.indexOf(args.name||'')>=0; });
+    if(gi<0) gi = 4;
+    navigateAndRun('#/interact', function(){
+      switchWishTab(gi);
+      var ws = WISH_GROUPS[gi].wishes;
+      setTimeout(function(){
+        if(ws.length>0) selectWishPreset(0);
+        done({ok:true, group: WISH_GROUPS[gi].tab, wish: ws[0]||'', total: ws.length});
+      }, 80);
+    });
+  },
+  /* 时令推荐 */
+  season_tip: function(args, done){
+    var now = new Date();
+    var m = now.getMonth()+1;
+    var day = now.getDate();
+    // 南安酥梨9月成熟（早熟8月、旺季9-10月、储藏11-次年2月）
+    var season = ''; var tip='';
+    if(m===8){ season='早熟上市期'; tip='🍐 早酥梨刚下树，脆嫩多汁，抢先尝鲜好时机！'; }
+    else if(m===9){ season='黄金采摘季'; tip='🍐 9月正是南安酥梨成熟的黄金期，糖度高达15°+，现在认领的梨树今年就能结果！'; }
+    else if(m===10){ season='采摘尾声'; tip='🍐 晚熟品种刚收尾，错过了等明年～认领的话，明年你家梨树肯定有梨吃！'; }
+    else if(m<=2){ season='储藏期'; tip='🍐 现在吃到的是窖藏酥梨，经过后熟更甜更润。认领要趁早，开春开始管理～'; }
+    else if(m<=4){ season='萌芽管理期'; tip='🌱 梨树刚发芽，正是认领签合同的好时节，一整年都有专属果树！'; }
+    else if(m<=6){ season='疏果挂果期'; tip='🌿 小梨果正在长大，6月认领还能赶上今年这一批～'; }
+    else { season='夏季护果期'; tip='☀️ 夏季是梨树最需要照料的时候，等9月你家的梨就成熟啦！'; }
+    done({ok:true, season:season, tip:tip, date:(m+'/'+day)});
   }
 };
 
@@ -2430,23 +2924,105 @@ function matchPage(q){
 function planIntent(raw){
   var q = raw.toLowerCase().replace(/[\s，。！？,.!?~～\-—"'""'']/g,'');
   var plan = null;
-  // 行动信号：用户明确要求"执行"而非"咨询"
-  var WANT = /帮我|给我|我要|我想|我来|立即|马上|来一|种一|认领一|认养一|演示|开始|生成一|做一|点个赞|复制|带我|去看|打开|跳转/;
-  // 咨询信号：只想了解，不执行写操作
-  var ASK = /怎么|如何|什么是|是什么|流程|好处|区别|哪些|为什么|啥是|怎样|吗呢|原理|介绍/;
-  var wantsAction = WANT.test(q) && !/怎么|如何|什么是|是什么|流程|好处|原理/.test(q);
-  // 纯祈使/无疑问词时也视为行动（如"演示扫码""再来一棵"）
-  var imperative = !ASK.test(q);
+  // 行动信号（放宽，尽量让用户的话都能执行到页面）
+  var WANT = /帮我|给我|我要|我想|我来|立即|马上|来一|生成|做|点个赞|复制|带我|去看|打开|跳转|演示|开始|试试|看看|查|查一下|找一下|给个|帮着|想要|想|能.*帮/;
+  // 咨询信号：纯咨询（如"什么是溯源""酥梨多少钱一斤"）——这类走知识库
+  var ASK = /什么是|是什么|多少钱|为啥|为什么|原理|定义|概念|介绍一下|讲讲|说说/;
 
-  // 再来一棵 / 又一棵（多轮指代）
-  if(/再来一棵|再认领一棵|又一棵|另一棵|多一棵/.test(q)){
+  // ===== 多轮延续性处理（换一个/再来一个/继续/换句/换张） =====
+  var multiRoundMatch = false;
+  if(/换一个|再来一个|换张|换一张|再来一张|换一句|再来一句|换个|再来/.test(q) && agentCtx.lastPosterWishIdx!==null){
+    var curWg = agentCtx.lastWishGroup || 4;
+    var ws = WISH_GROUPS[curWg].wishes;
+    var nextIdx = (agentCtx.lastPosterWishIdx + 1) % ws.length;
+    plan={intent:'poster',label:'换一句，再来一张',steps:[
+      {tool:'goto',args:{hash:'#/interact'},label:'打开互动传播页'},
+      {tool:'select_wish_group',args:{gi:curWg,name:WISH_GROUPS[curWg].tab},label:'保持同主题'},
+      {tool:'poster',args:{wishIdx:nextIdx},label:'合成新海报'}
+    ]};
+    multiRoundMatch=true;
+  }
+  else if(/继续|然后呢|接下来|再来|还有呢|那/.test(q) && agentCtx.lastIntent){
+    var lastIntent = agentCtx.lastIntent;
+    if(lastIntent==='poster' || lastIntent==='combo_adopt_poster' || lastIntent==='combo_like_poster'){
+      plan={intent:'poster',label:'再来一张海报',steps:[
+        {tool:'goto',args:{hash:'#/interact'},label:'打开海报页'},
+        {tool:'select_wish_group',args:{gi:agentCtx.lastWishGroup||4},label:'保持同分组'},
+        {tool:'poster',args:{wishIdx:((agentCtx.lastPosterWishIdx||0)+1)%5},label:'换一句试试'}
+      ]};
+    } else if(lastIntent==='adopt' || lastIntent==='mytrees'){
+      plan={intent:'adopt',label:'再来一棵',steps:[
+        {tool:'goto',args:{hash:'#/experience'},label:'打开体验页'},
+        {tool:'adopt',args:{},label:'生成新的专属编号'}
+      ]};
+    } else {
+      plan={intent:'continue_hint',label:'继续探索',steps:[]};
+    }
+    multiRoundMatch=true;
+  } else {
+  // ===== 时令/季节查询 =====
+  if(/什么时候|时令|季节|现在.*梨|酥梨.*熟|成熟|采摘|最好吃|几月份|几月|季节|时候/.test(q) && !/怎么|如何/.test(q)){
+    plan={intent:'season_tip',label:'告诉你南安酥梨的时令',steps:[{tool:'season_tip',args:{},label:'查询当前时令推荐'}]};
+  }
+  // ===== 情感海报（情侣/闺蜜/兄弟/亲人） =====
+  // 情侣
+  else if(/女朋友|男友|情侣|对象|老婆|老公|恋人|亲爱的|想你|表白|秀恩爱/.test(q)){
+    plan={intent:'poster',label:'为ta生成情侣主题专属海报',steps:[
+      {tool:'goto',args:{hash:'#/interact'},label:'打开海报生成页'},
+      {tool:'select_wish_group',args:{gi:0,name:'情侣'},label:'切换到情侣寄语'},
+      {tool:'poster',args:{wishIdx:0},label:'合成情侣主题海报'}
+    ]};
+  }
+  // 闺蜜
+  else if(/闺蜜|姐妹|好朋友|姐妹花|闺蜜情/.test(q)){
+    plan={intent:'poster',label:'为闺蜜生成专属海报',steps:[
+      {tool:'goto',args:{hash:'#/interact'},label:'打开海报生成页'},
+      {tool:'select_wish_group',args:{gi:1,name:'闺蜜'},label:'切换到闺蜜寄语'},
+      {tool:'poster',args:{wishIdx:0},label:'合成闺蜜主题海报'}
+    ]};
+  }
+  // 兄弟
+  else if(/兄弟|哥们|弟兄|兄弟伙|队友|兄弟情/.test(q)){
+    plan={intent:'poster',label:'为兄弟生成专属海报',steps:[
+      {tool:'goto',args:{hash:'#/interact'},label:'打开海报生成页'},
+      {tool:'select_wish_group',args:{gi:2,name:'兄弟'},label:'切换到兄弟寄语'},
+      {tool:'poster',args:{wishIdx:0},label:'合成兄弟主题海报'}
+    ]};
+  }
+  // 亲人/爸妈/家人
+  else if(/爸妈|父母|家人|亲人|爸爸|妈妈|姥姥|姥爷|奶奶|爷爷|孝|尽孝|回老家|家的味道/.test(q)){
+    plan={intent:'poster',label:'为家人生成温暖海报',steps:[
+      {tool:'goto',args:{hash:'#/interact'},label:'打开海报生成页'},
+      {tool:'select_wish_group',args:{gi:3,name:'亲人'},label:'切换到亲人寄语'},
+      {tool:'poster',args:{wishIdx:0},label:'合成亲人主题海报'}
+    ]};
+  }
+  // ===== 组合操作：认领 + 生成专属海报 =====
+  else if((/认领|认养|来一棵|种一棵/.test(q) && /海报|图|生成/.test(q)) || /认领.*海报|专属海报.*认领/.test(q)){
+    plan={intent:'combo_adopt_poster',label:'认领一棵 + 生成专属海报',steps:[
+      {tool:'goto',args:{hash:'#/experience'},label:'打开沉浸体验页'},
+      {tool:'adopt',args:{},label:'生成专属梨树编号与二维码'},
+      {tool:'goto',args:{hash:'#/interact'},label:'跳转到海报生成页'},
+      {tool:'poster',args:{wishIdx:2},label:'合成"守护梨园"主题海报'}
+    ]};
+  }
+  // ===== 组合操作：点赞 + 生成海报 =====
+  else if(/点赞/.test(q) && /海报|分享|图/.test(q)){
+    plan={intent:'combo_like_poster',label:'点赞助力 + 生成海报分享',steps:[
+      {tool:'like',args:{},label:'写入点赞助力数据'},
+      {tool:'goto',args:{hash:'#/interact'},label:'跳转到海报生成页'},
+      {tool:'poster',args:{wishIdx:0},label:'合成甜蜜主题海报'}
+    ]};
+  }
+  // ===== 再来一棵 =====
+  else if(/再来一棵|再认领一棵|又一棵|另一棵|多一棵/.test(q)){
     plan={intent:'adopt',label:'再为你认领一棵专属梨树',steps:[
       {tool:'goto',args:{hash:'#/experience'},label:'打开沉浸体验页'},
       {tool:'adopt',args:{},label:'生成新的梨树编号与二维码'}
     ]};
   }
   // 点赞
-  else if(wantsAction && /点个赞|帮我点赞|点赞助力|我要点赞|助力/.test(q)){
+  else if(/点个赞|帮我点赞|点赞助力|我要点赞|助力/.test(q)){
     plan={intent:'like',label:'为南安酥梨点赞助力',steps:[{tool:'like',args:{},label:'写入点赞并读取最新人数'}]};
   }
   // 查询点赞数
@@ -2454,7 +3030,7 @@ function planIntent(raw){
     plan={intent:'likes_count',label:'查询点赞数据',steps:[{tool:'likes_count',args:{},label:'读取本地点赞计数'}]};
   }
   // 认领
-  else if(wantsAction && /认领|领养|种一棵|来一棵|认养/.test(q)){
+  else if(/认领|领养|种一棵|来一棵|认养/.test(q)){
     plan={intent:'adopt',label:'为你认领一棵专属梨树',steps:[
       {tool:'goto',args:{hash:'#/experience'},label:'打开沉浸体验页'},
       {tool:'adopt',args:{},label:'生成专属编号与认领二维码'}
@@ -2465,14 +3041,27 @@ function planIntent(raw){
     plan={intent:'mytrees',label:'查询你的认领记录',steps:[{tool:'mytrees',args:{},label:'读取本地认领档案'}]};
   }
   // 演示扫码 / 溯源操作
-  else if(wantsAction && /演示.*扫码|扫码.*演示|演示一下|帮我扫码|扫一下|试.*扫码|体验.*溯源/.test(q)){
+  else if(/演示.*扫码|扫码.*演示|演示一下|帮我扫码|扫一下|试.*扫码|体验.*溯源/.test(q)){
     plan={intent:'trace_demo',label:'演示全链路扫码溯源',steps:[
       {tool:'goto',args:{hash:'#/trace'},label:'打开溯源体验页'},
       {tool:'trace_demo',args:{},label:'启动演示扫码并点亮溯源链路'}
     ]};
   }
-  // 生成海报
-  else if(wantsAction && /海报|生成.*图|做.*图|做一张|来一张/.test(q)){
+  // 自定义寄语海报（用户说"生成海报：XXX"或"用XXX做一张海报"）
+  else if(/海报.*[：:]|海报.*用|用.*做.*海报|海报.*写|帮我写.*海报|海报.*说/.test(q) || /生成.*海报/.test(q) && /我|我的|专属|自己|原创|写/.test(q)){
+    // 提取冒号后/引号内的文字作为自定义寄语
+    var customText = (q.match(/[:："「""](.+?)["「"」\s]/)||[])[1] || (q.match(/用(.+?)做/)||[])[1] || '';
+    if(!customText){
+      // 没有冒号的话，取用户原话前18个汉字作为寄语
+      customText = raw.replace(/^(帮我|给我|做|生成|来|用|想|要|一|张|海|报)/g,'').trim().slice(0,28) || '一颗南安酥梨，品味吕梁甜蜜';
+    }
+    plan={intent:'poster_custom',label:'用你自己的话生成海报',steps:[
+      {tool:'goto',args:{hash:'#/interact'},label:'打开互动传播页'},
+      {tool:'poster',args:{customWish:customText},label:'合成「'+customText+'」主题海报'}
+    ]};
+  }
+  // 生成海报（含关键词匹配选寄语）
+  else if(/海报|生成.*图|做.*图|做一张|来一张/.test(q)){
     var wi=0;
     if(/数字文化|点梨成金/.test(q))wi=1; else if(/认领|守护/.test(q))wi=2;
     else if(/信任|走远/.test(q))wi=3; else if(/吕梁精神|诚信/.test(q))wi=4;
@@ -2482,14 +3071,14 @@ function planIntent(raw){
     ]};
   }
   // 梨王挑战
-  else if(wantsAction && /答题|挑战|梨王|玩游戏|游戏|闯关|答题游戏/.test(q)){
+  else if(/答题|挑战|梨王|玩游戏|游戏|闯关|答题游戏/.test(q)){
     plan={intent:'quiz',label:'打开梨王宝藏挑战',steps:[
       {tool:'goto',args:{hash:'#/experience',scroll:'.game-wrap'},label:'打开沉浸体验页'},
       {tool:'quiz',args:{},label:'定位到五关答题区'}
     ]};
   }
   // 预约
-  else if(wantsAction && /预约|考察|报名|预订/.test(q)){
+  else if(/预约|考察|报名|预订/.test(q)){
     plan={intent:'booking',label:'帮你打开预约表单',steps:[
       {tool:'goto',args:{hash:'#/team'},label:'打开团队展望页'},
       {tool:'booking',args:{},label:'展开考察预约表单'}
@@ -2500,25 +3089,45 @@ function planIntent(raw){
     plan={intent:'mybookings',label:'查询你的预约记录',steps:[{tool:'mybookings',args:{},label:'读取本地预约数据'}]};
   }
   // 复制分享链接
-  else if(wantsAction && /复制链接|分享链接|复制网址|复制地址/.test(q)){
+  else if(/复制链接|分享链接|复制网址|复制地址/.test(q)){
     plan={intent:'copy_link',label:'复制体验馆链接',steps:[{tool:'copy_link',args:{},label:'写入剪贴板'}]};
   }
-  // 联系方式（给卡片，不强制跳转拨号）
-  else if(/打电话|电话|联系方式|怎么联系|邮箱|邮件/.test(q)){
+  // 联系方式
+  else if(/打电话|电话|联系方式|怎么联系|邮箱|邮件|联系/.test(q)){
     plan={intent:'contact',label:'调取联系方式',steps:[]};
   }
-  // 纯页面跳转：去/打开/进入/看看 + 页面名
+  // ===== 页面跳转（放宽门控：不再需要WANT信号，直接匹配页面名就行） =====
   else {
     var pg = matchPage(q);
-    var wantsGo = /去|打开|进入|看看|跳转|逛|浏览/.test(q);
-    if(pg && wantsGo){
+    var wantsGo = /去|打开|进入|看看|跳转|逛|浏览|给我看|让我看/.test(q);
+    var isPurePageName = !!pg && !ASK.test(q);
+    if(pg && (wantsGo || isPurePageName)){
       plan={intent:'goto',label:'为你切换页面',steps:[{tool:'goto',args:{hash:pg},label:'跳转到「'+pageNameOf(pg)+'」'}]};
     }
     // 多轮指代：去看看（跟上一轮页面）
     else if(/去看看|带我去|打开看看|去页面/.test(q) && agentCtx.lastHash){
       plan={intent:'goto',label:'打开刚才提到的页面',steps:[{tool:'goto',args:{hash:agentCtx.lastHash},label:'跳转到「'+pageNameOf(agentCtx.lastHash)+'」'}]};
     }
-  }
+    // "怎么认领" —— 温和引导（不再走KB返回静态文字）
+    else if(/怎么认领|如何认领|认领.*怎么|认领.*流程|认领.*步骤/.test(q)){
+      plan={intent:'adopt_guide',label:'手把手教你认领',steps:[
+        {tool:'goto',args:{hash:'#/experience'},label:'打开沉浸体验页'}
+      ]};
+    }
+    // "怎么生成海报" —— 温和引导
+    else if(/怎么生成海报|如何生成海报|海报.*怎么|海报.*流程/.test(q)){
+      plan={intent:'poster_guide',label:'手把手教你做海报',steps:[
+        {tool:'goto',args:{hash:'#/interact'},label:'打开互动传播页'}
+      ]};
+    }
+    // "怎么扫码" —— 温和引导
+    else if(/怎么扫码|如何扫码|扫码.*怎么|扫码.*流程/.test(q)){
+      plan={intent:'trace_guide',label:'手把手教你扫码溯源',steps:[
+        {tool:'goto',args:{hash:'#/trace'},label:'打开溯源体验页'}
+      ]};
+    }
+  } // ← 关闭最内层 else（页面跳转分支）
+  } // ← 关闭外层 else {（多轮延续匹配失败后的大else块）
   return plan;
 }
 function pageNameOf(h){
@@ -2580,6 +3189,42 @@ function buildToolReply(intent, results){
           btns:[{t:'一键拨打电话',tel:'03583000000'},{t:'在线预约',ai:'我要预约考察'}]}};
     case 'goto':
       return {text:'好的，已为你切换页面～还需要我帮你做什么操作吗？',quick:['演示扫码溯源','认领一棵梨树','生成专属海报']};
+    case 'season_tip':
+      return {text:'📅 今天是 '+last.date+'，南安酥梨现在处于「'+last.season+'」。\n\n'+last.tip,
+        quick:['现在认领一棵','生成专属海报','酥梨多少钱一斤']};
+    case 'combo_adopt_poster':
+      return {text:'🌳✨ 认领+海报一条龙完成！梨树编号 <b>'+last.id+'</b>（'+last.date+'）已生成，专属守护梨园主题海报也帮你合成好了，点下载就能保存～',
+        quick:['再认领一棵','换个寄语再来一张','分享给家人'],
+        card:{title:'🌳✨ 认领+海报 一站式完成',
+          body:'专属编号：<span class="aac-code">'+last.id+'</span><br>守护梨园海报已生成，可直接下载PNG',
+          btns:[{t:'下载海报',hash:'#/interact'},{t:'我的梨树',ai:'我的梨树'}]}};
+    case 'combo_like_poster':
+      return {text:'👍🎨 点赞+海报一条龙完成！现在共有 '+last.count+' 位朋友为南安酥梨加油，甜蜜主题海报已合成～',
+        quick:['再换一张','复制链接分享','演示扫码溯源']};
+    case 'adopt_guide':
+      return {text:'📖 手把手教你认领梨树：\n\n1. 页面已自动打开到「沉浸体验」\n2. 找到「认领一棵专属梨树」按钮，点击即可\n3. 系统会自动生成编号、二维码和专属卡片\n4. 认领后可以去「我的梨树」查看记录，还可以生成专属海报\n\n要不要我现在帮你点一下认领？',
+        quick:['帮我认领一棵','认领有什么好处','生成专属海报']};
+    case 'poster_guide':
+      return {text:'📖 手把手教你生成海报：\n\n1. 页面已自动打开到「互动传播」\n2. 在寄语区域选一个你喜欢的（情侣/闺蜜/兄弟/亲人/品牌，共22条+自定义）\n3. 点「生成海报」——canvas会从正方形自动变成长条形，底部出现寄语带+部署二维码\n4. 点「下载PNG」就能保存，点右侧独立QR可以直接扫码进入体验馆\n\n要不要我帮你生成一张（比如给女朋友的）？',
+        quick:['给女朋友生成一张','给爸妈做一张','生成品牌海报']};
+    case 'trace_guide':
+      return {text:'📖 手把手教你扫码溯源：\n\n1. 页面已自动打开到「溯源体验」\n2. 点「🔍 演示扫码」按钮启动演示模式\n3. 4个溯源节点（种植→质检→冷链→销售）会依次点亮\n4. 认领过的梨树会有专属溯源码，扫码可查看生长档案\n\n要不要我现在给你演示一下？',
+        quick:['演示一下扫码','认领一棵梨树','溯源和认证有啥区别']};
+    case 'continue_hint':
+      // 多轮中不知道用户要啥，但知道之前的上下文
+      var hints = [];
+      if(agentCtx.lastIntent==='adopt' || agentCtx.lastIntent==='mytrees'){
+        hints=['再认领一棵','生成守护梨园主题海报','去效益页看看'];
+        return {text:'刚才你在看认领相关的内容～想继续哪方面？', quick:hints};
+      } else if(agentCtx.lastIntent==='poster' || agentCtx.lastIntent==='combo_'){
+        hints=['换一句再来一张','给闺蜜做一张','复制链接分享'];
+        return {text:'刚才海报做好了～还想换个风格或者换个主题吗？', quick:hints};
+      } else if(agentCtx.lastIntent==='trace_demo'){
+        hints=['认领一棵梨树','生成溯源海报','去效益页'];
+        return {text:'溯源链路看完了～想不想认养一棵你自己的梨树，然后跟踪它的溯源档案？', quick:hints};
+      }
+      return {text:'好的，继续探索吧～有任何问题直接告诉我！',
+        quick:['演示扫码','认领梨树','给女朋友做海报']};
   }
   return null;
 }
@@ -2679,14 +3324,21 @@ var CMD_LIST = [
     {icon:'💬',label:'互动传播',cmd:'去互动页',desc:''},
     {icon:'👥',label:'团队展望',cmd:'去团队页',desc:''}
   ]},
+  {group:'情感海报', items:[
+    {icon:'💑',label:'情侣主题海报',cmd:'给女朋友生成一张海报',desc:'情侣蜜语'},
+    {icon:'👯‍♀️',label:'闺蜜主题海报',cmd:'给闺蜜做一张海报',desc:'友谊寄语'},
+    {icon:'🤝',label:'兄弟主题海报',cmd:'给兄弟做一张海报',desc:'兄弟情'},
+    {icon:'👨‍👩‍👧',label:'亲人主题海报',cmd:'给爸妈做一张海报',desc:'家的味道'},
+    {icon:'✨',label:'自定义寄语海报',cmd:'帮我做一张自定义寄语海报',desc:'写你自己的话'}
+  ]},
   {group:'智能操作', items:[
-    {icon:'🌳',label:'认领梨树',cmd:'帮我认领一棵梨树',desc:'生成专属编号'},
-    {icon:'👍',label:'点赞助力',cmd:'帮我点赞',desc:'为酥梨加油'},
-    {icon:'🎨',label:'生成海报',cmd:'帮我生成海报',desc:'下载专属海报'},
-    {icon:'📷',label:'演示扫码',cmd:'演示一下扫码',desc:'溯源全链路'},
+    {icon:'🌳',label:'认领+海报',cmd:'认领一棵梨树同时生成海报',desc:'一条龙'},
+    {icon:'👍',label:'点赞+海报',cmd:'点赞并生成海报分享',desc:'组合操作'},
+    {icon:'🎨',label:'生成品牌海报',cmd:'帮我生成一张品牌情怀海报',desc:'标准寄语'},
+    {icon:'📷',label:'演示扫码',cmd:'演示一下扫码溯源',desc:'溯源全链路'},
+    {icon:'📅',label:'时令推荐',cmd:'现在酥梨是什么时令',desc:'9月黄金期'},
     {icon:'📝',label:'预约考察',cmd:'我要预约考察',desc:'实地参观'},
-    {icon:'📋',label:'我的梨树',cmd:'我的梨树',desc:'查看认领记录'},
-    {icon:'📅',label:'预约记录',cmd:'我的预约记录',desc:'查看预约'},
+    {icon:'📋',label:'我的梨树',cmd:'我的梨树',desc:'认领记录'},
     {icon:'🔗',label:'复制链接',cmd:'复制链接',desc:'分享给朋友'}
   ]}
 ];
@@ -2880,6 +3532,23 @@ function runAgentPlan(rawText, plan, allDone){
     agentCtx.lastIntent = plan.intent;
     var gotoStep = plan.steps.filter(function(s){return s.tool==='goto';})[0];
     if(gotoStep && gotoStep.args && gotoStep.args.hash) agentCtx.lastHash = gotoStep.args.hash;
+    // 记忆：情感海报的主题分组
+    var selectGroupStep = plan.steps.filter(function(s){return s.tool==='select_wish_group';})[0];
+    if(selectGroupStep && selectGroupStep.args && typeof selectGroupStep.args.gi==='number'){
+      agentCtx.lastWishGroup = selectGroupStep.args.gi;
+    } else if(/情侣|女朋友|男友/.test(rawText)) agentCtx.lastWishGroup=0;
+    else if(/闺蜜|姐妹/.test(rawText)) agentCtx.lastWishGroup=1;
+    else if(/兄弟|哥们/.test(rawText)) agentCtx.lastWishGroup=2;
+    else if(/爸妈|家人|亲人/.test(rawText)) agentCtx.lastWishGroup=3;
+    else if(/品牌|情怀|认领.*守护/.test(rawText)) agentCtx.lastWishGroup=4;
+    // 记忆：poster使用的wishIdx
+    var posterStep = plan.steps.filter(function(s){return s.tool==='poster';})[0];
+    if(posterStep && posterStep.args && typeof posterStep.args.wishIdx==='number'){
+      agentCtx.lastPosterWishIdx = posterStep.args.wishIdx;
+    }
+    // 最近5轮历史（滑动窗口）
+    agentCtx.recent.unshift({intent:plan.intent, text:rawText});
+    if(agentCtx.recent.length>5) agentCtx.recent.pop();
     agentCtx.turn++;
     var head=planCard.querySelector('.ai-plan-head');
     head.classList.remove('brain');
@@ -3486,13 +4155,68 @@ function renderBenefit(el){
   },100);
 }
 /* ===== 互动传播 ===== */
-var WISHES = [
-  '一颗南安酥梨，品味吕梁甜蜜',
-  '数字文化双轮驱动，点梨成金',
-  '认领一棵梨树，守护一片梨园',
-  '溯源让信任可见，让好梨走远',
-  '吕梁精神种好梨，晋商诚信卖好价'
+/* ===== 寄语分组：情感向 + 品牌向 + 自定义 ===== */
+var WISH_GROUPS = [
+  {
+    tab:'情侣', icon:'💑',
+    wishes:[
+      '一颗南安酥梨，一口就是想你的滋味',
+      '梨想的那个人，和你一起吃梨才甜',
+      '吕梁的风，吹甜了梨，也吹开了你的笑',
+      '把最甜的梨，送给最甜的你',
+      '山河远阔，有你有梨，刚刚好'
+    ]
+  },
+  {
+    tab:'闺蜜', icon:'👯‍♀️',
+    wishes:[
+      '好姐妹一起吃好梨，友谊甜到骨子里',
+      '分享一颗酥梨，也分享一段闺蜜情',
+      '我们不止一起喝奶茶，还要一起啃酥梨',
+      '愿我们的关系，像这酥梨一样酥甜干脆',
+      '下次见面，带梨给你吃'
+    ]
+  },
+  {
+    tab:'兄弟', icon:'🤝',
+    wishes:[
+      '兄弟干杯！来，干了这颗梨',
+      '闯江湖带兄弟，吃酥梨一起啃',
+      '山高路远，兄弟一起啃梨',
+      '你的事就是我的事，你的梨就是我的梨'
+    ]
+  },
+  {
+    tab:'亲人', icon:'👨‍👩‍👧',
+    wishes:[
+      '给爸妈带一箱南安酥梨，甜到心里',
+      '家的味道，就是爸妈递过来的那颗梨',
+      '在外打拼不忘家，寄一箱酥梨给牵挂的人',
+      '愿家人平平安安，像这梨一样圆圆满满',
+      '回家，吃梨，陪爸妈说说话'
+    ]
+  },
+  {
+    tab:'品牌情怀', icon:'🍐',
+    wishes:[
+      '一颗南安酥梨，品味吕梁甜蜜',
+      '认领一棵梨树，守护一片梨园',
+      '溯源让信任可见，让好梨走远',
+      '数字文化双轮驱动，点梨成金',
+      '吕梁精神种好梨，晋商诚信卖好价'
+    ]
+  },
+  {
+    tab:'🌿 自定义', icon:'✏️',
+    wishes:[]
+  }
 ];
+/* 扁平化后的寄语数组（给 genPoster/Agent 索引用） */
+var WISHES = [];
+WISH_GROUPS.forEach(function(g){ g.wishes.forEach(function(w){ WISHES.push(w); }); });
+/* 当前选中类型：'preset' 或 'custom' */
+var __wishType = 'preset';
+var __customWish = '';
 
 function toggleRoiCard(card){
   card.classList.toggle('expanded');
@@ -3571,20 +4295,50 @@ function renderInteract(el){
       <p class="share-tip">点击微博/QQ可直接跳转分享页面；微信需先复制链接再粘贴；移动端可点"系统分享"调用原生分享面板</p>\
     </div>\
   </div>';
-  // 渲染寄语列表
-  var wl = '';
-  WISHES.forEach(function(w,i){
-    wl += '<label class="wish-opt'+(i===0?' selected':'')+'" onclick="selectWish('+i+')"><input type="radio" name="wish" value="'+i+'"'+(i===0?' checked':'')+'><span class="wo-dot"></span>'+w+'</label>';
-  });
-  document.getElementById('wish-list').innerHTML = wl;
+  // 渲染寄语分组Tab + 列表 + 自定义区
+  var tabs = WISH_GROUPS.map(function(g,i){
+    return '<button class="wish-tab'+(i===4?' active':'')+'" onclick="switchWishTab('+i+')" data-gi="'+i+'">'
+      +'<span class="wt-icon">'+g.icon+'</span><span>'+g.tab.replace('🌿 ','')+'</span></button>';
+  }).join('');
+  var defaultGroupIdx = 4; // 默认显示"品牌情怀"（含原来的5条）
+  var defaultList = WISH_GROUPS[defaultGroupIdx].wishes.map(function(w,gi){
+    return '<label class="wish-opt'+(gi===0?' selected':'')+'" onclick="selectWishPreset('+gi+')"><input type="radio" name="wish" value="'+gi+'"'+(gi===0?' checked':'')+'><span class="wo-dot"></span>'+w+'</label>';
+  }).join('');
+  // 自定义寄语区（默认隐藏）
+  var customBlock = '<div class="wish-custom" id="wish-custom" style="display:none;">\
+    <textarea id="custom-wish-input" maxlength="30" placeholder="写下你想说的话（30字以内）"></textarea>\
+    <div class="wish-custom-actions">\
+      <span class="wc-count"><span id="wc-num">0</span>/30</span>\
+      <button class="btn btn-primary" onclick="useCustomWish()" style="padding:6px 18px;font-size:13px;">使用这句</button>\
+    </div>\
+    <p class="wc-hint">💡 原创寄语，生成你的专属海报，分享给朋友更有温度</p>\
+  </div>';
+  document.getElementById('wish-list').innerHTML = '<div class="wish-tabs">'+tabs+'</div><div class="wish-group-list" id="wish-group-list">'+defaultList+'</div>'+customBlock;
+  // 字数计数
+  setTimeout(function(){
+    var ta=document.getElementById('custom-wish-input');
+    if(ta){
+      ta.addEventListener('input',function(){
+        document.getElementById('wc-num').textContent=ta.value.length;
+      });
+    }
+  },50);
   // 初始绘制画布占位
   window.__posterGenerated=false;
   drawPosterPlaceholder();
-  // 绘制页面上独立的部署二维码canvas
+  // 预加载部署二维码PNG（用户提供的真实部署码）
+  loadImg('部署二维码.png').catch(function(){});
+  // 绘制页面上独立的部署二维码canvas —— 用用户提供的真实PNG
   var deployCanvas=document.getElementById('deploy-qr');
   if(deployCanvas){
-    var deployUrl=(location.origin+location.pathname).replace(/\/$/,'');
-    drawQR(deployCanvas, deployUrl, 160, '#E07B00', '#ffffff');
+    loadImg('部署二维码.png').then(function(img){
+      var ctx=deployCanvas.getContext('2d');
+      ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,160,160);
+      ctx.drawImage(img,0,0,160,160);
+    }).catch(function(){
+      // 兜底：如果PNG加载失败，才用动态生成
+      drawQR(deployCanvas, (location.origin+location.pathname).replace(/\/$/,''), 160, '#E07B00', '#ffffff');
+    });
   }
 }
 function addLike(){
@@ -3604,17 +4358,81 @@ function addLike(){
   emoji.parentNode.appendChild(fly);
   setTimeout(function(){fly.remove();},1000);
 }
-function selectWish(i){
-  document.querySelectorAll('.wish-opt').forEach(function(l,j){
-    l.classList.toggle('selected',i===j);
-    var radio=l.querySelector('input[type=radio]');
-    if(radio) radio.checked = (i===j);
+/* 分组Tab切换 */
+function switchWishTab(gi){
+  document.querySelectorAll('.wish-tab').forEach(function(b,i){
+    b.classList.toggle('active', i===gi);
   });
+  var customBlock = document.getElementById('wish-custom');
+  var listBlock = document.getElementById('wish-group-list');
+  // 最后一个tab（自定义）
+  if(gi === WISH_GROUPS.length-1){
+    listBlock.style.display='none';
+    customBlock.style.display='block';
+    return;
+  }
+  customBlock.style.display='none';
+  listBlock.style.display='block';
+  var g = WISH_GROUPS[gi];
+  var html = g.wishes.map(function(w,i){
+    return '<label class="wish-opt'+(i===0?' selected':'')+'" onclick="selectWishPreset('+i+')"><input type="radio" name="wish" value="'+i+'"'+(i===0?' checked':'')+'><span class="wo-dot"></span>'+w+'</label>';
+  }).join('');
+  listBlock.innerHTML = html;
+  __wishType='preset';
+  __customWish='';
+}
+/* 选预设寄语 */
+function selectWishPreset(gi){
+  document.querySelectorAll('.wish-group-list .wish-opt').forEach(function(l,j){
+    l.classList.toggle('selected', j===gi);
+    var radio=l.querySelector('input[type=radio]');
+    if(radio) radio.checked = (j===gi);
+  });
+  __wishType='preset';
+  __customWish='';
+}
+/* 使用自定义寄语 */
+function useCustomWish(){
+  var ta = document.getElementById('custom-wish-input');
+  var v = (ta?ta.value:'').trim();
+  if(!v){ alert('请先写下你的寄语哦～'); return; }
+  __wishType='custom';
+  __customWish = v;
+  // 视觉反馈：把自定义输入框高亮一下
+  var customBlock = document.getElementById('wish-custom');
+  customBlock.classList.add('custom-selected');
+  setTimeout(function(){ customBlock.classList.remove('custom-selected'); }, 1200);
+}
+function selectWish(i){
+  // 兼容旧调用（Agent工具等）
+  __wishType='preset';
+  __customWish='';
+  // 把扁平索引i换算成分组+组内索引
+  var soFar=0, gi=0, wi=0;
+  for(var g=0; g<WISH_GROUPS.length; g++){
+    var ws=WISH_GROUPS[g].wishes;
+    if(i < soFar+ws.length){ gi=g; wi=i-soFar; break; }
+    soFar+=ws.length;
+  }
+  // 切换到对应Tab并选中
+  switchWishTab(gi);
+  setTimeout(function(){ selectWishPreset(wi); }, 30);
 }
 function genPoster(){
-  var sel = document.querySelector('.wish-opt.selected');
-  var idx = sel?parseInt(sel.querySelector('input').value):0;
-  var wish = WISHES[idx];
+  var wish;
+  if(__wishType==='custom' && __customWish){
+    wish = __customWish;
+  } else {
+    var sel = document.querySelector('.wish-opt.selected');
+    var idx = sel?parseInt(sel.querySelector('input').value):0;
+    // 先尝试从当前分组取，找不到则回退到WISHES扁平数组
+    var list = document.querySelectorAll('#wish-group-list .wish-opt');
+    if(list[idx]){
+      wish = list[idx].textContent.trim();
+    } else {
+      wish = WISHES[idx] || '一颗南安酥梨，品味吕梁甜蜜';
+    }
+  }
   var canvas = document.getElementById('poster-canvas');
   // 生成时才把canvas从1024×1024扩到1024×1248
   canvas.width = 1024;
@@ -3624,7 +4442,8 @@ function genPoster(){
   if(btn){ btn.disabled=true; var old=btn.textContent; btn.textContent='合成中…'; }
   Promise.all([
     loadImg(ASSETS.poster).catch(function(){return null;}),
-    loadImg(ASSETS.ip).catch(function(){return null;})
+    loadImg(ASSETS.ip).catch(function(){return null;}),
+    loadImg('部署二维码.png').catch(function(){return null;})  // 确保QR也加载好
   ]).then(function(imgs){
     if(btn){ btn.disabled=false; btn.textContent=old; }
     if(imgs[0]){
@@ -3699,29 +4518,30 @@ function composePoster(ctx, posterImg, ipImg, wish){
   ctx.font='20px "Microsoft YaHei","PingFang SC",sans-serif';
   var dateStr=new Date().toLocaleDateString('zh-CN');
   ctx.fillText(dateStr+' · 南安酥梨数字文化体验馆',208,bandY+bandH-18);
-  // 6. 右侧部署二维码
+  // 6. 右侧部署二维码 —— 用用户提供的真实PNG
   var qrSize=128;
   var qrX=W-qrSize-28;
   var qrY=bandY+(bandH-qrSize)/2+6;
-  var off=document.createElement('canvas');
-  off.width=qrSize; off.height=qrSize;
-  var deployUrl=(location.origin+location.pathname).replace(/\/$/,'');
-  var qrOk=drawQR(off, deployUrl, qrSize, '#3E2723', '#ffffff');
-  if(qrOk){
-    ctx.save();
-    ctx.fillStyle='#ffffff';
-    roundRect(ctx, qrX-6, qrY-6, qrSize+12, qrSize+12, 10);
-    ctx.fill();
-    ctx.strokeStyle='#F5A623'; ctx.lineWidth=2;
-    roundRect(ctx, qrX-6, qrY-6, qrSize+12, qrSize+12, 10);
-    ctx.stroke();
-    ctx.drawImage(off, qrX, qrY);
-    ctx.fillStyle='#FFD180';
-    ctx.font='600 16px "Microsoft YaHei","PingFang SC",sans-serif';
-    ctx.textAlign='center';
-    ctx.fillText('扫码进入体验馆', qrX+qrSize/2, qrY+qrSize+22);
-    ctx.restore();
+  ctx.save();
+  ctx.fillStyle='#ffffff';
+  roundRect(ctx, qrX-6, qrY-6, qrSize+12, qrSize+12, 10);
+  ctx.fill();
+  ctx.strokeStyle='#F5A623'; ctx.lineWidth=2;
+  roundRect(ctx, qrX-6, qrY-6, qrSize+12, qrSize+12, 10);
+  ctx.stroke();
+  var qrImg = _imgCache['部署二维码.png'];
+  if(qrImg){
+    ctx.drawImage(qrImg, qrX, qrY, qrSize, qrSize);
+  } else {
+    var off2=document.createElement('canvas'); off2.width=qrSize; off2.height=qrSize;
+    drawQR(off2, (location.origin+location.pathname).replace(/\/$/,''), qrSize, '#3E2723', '#ffffff');
+    ctx.drawImage(off2, qrX, qrY);
   }
+  ctx.fillStyle='#FFD180';
+  ctx.font='600 16px "Microsoft YaHei","PingFang SC",sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText('扫码进入体验馆', qrX+qrSize/2, qrY+qrSize+22);
+  ctx.restore();
 }
 function roundRect(ctx, x, y, w, h, r){
   ctx.beginPath();
@@ -3796,29 +4616,30 @@ function composePosterFallback(ctx, wish){
   ctx.font='20px "Microsoft YaHei","PingFang SC",sans-serif';
   var dateStr=new Date().toLocaleDateString('zh-CN');
   ctx.fillText(dateStr+' · 南安酥梨数字文化体验馆',208,bandY+bandH-18);
-  // 右侧部署二维码
+  // 右侧部署二维码 —— 用用户提供的真实PNG
   var qrSize=128;
   var qrX=W-qrSize-28;
   var qrY=bandY+(bandH-qrSize)/2+6;
-  var off=document.createElement('canvas');
-  off.width=qrSize; off.height=qrSize;
-  var deployUrl=(location.origin+location.pathname).replace(/\/$/,'');
-  var qrOk=drawQR(off, deployUrl, qrSize, '#3E2723', '#ffffff');
-  if(qrOk){
-    ctx.save();
-    ctx.fillStyle='#ffffff';
-    roundRect(ctx, qrX-6, qrY-6, qrSize+12, qrSize+12, 10);
-    ctx.fill();
-    ctx.strokeStyle='#F5A623'; ctx.lineWidth=2;
-    roundRect(ctx, qrX-6, qrY-6, qrSize+12, qrSize+12, 10);
-    ctx.stroke();
-    ctx.drawImage(off, qrX, qrY);
-    ctx.fillStyle='#FFD180';
-    ctx.font='600 16px "Microsoft YaHei","PingFang SC",sans-serif';
-    ctx.textAlign='center';
-    ctx.fillText('扫码进入体验馆', qrX+qrSize/2, qrY+qrSize+22);
-    ctx.restore();
+  ctx.save();
+  ctx.fillStyle='#ffffff';
+  roundRect(ctx, qrX-6, qrY-6, qrSize+12, qrSize+12, 10);
+  ctx.fill();
+  ctx.strokeStyle='#F5A623'; ctx.lineWidth=2;
+  roundRect(ctx, qrX-6, qrY-6, qrSize+12, qrSize+12, 10);
+  ctx.stroke();
+  var qrImg = _imgCache['部署二维码.png'];
+  if(qrImg){
+    ctx.drawImage(qrImg, qrX, qrY, qrSize, qrSize);
+  } else {
+    var off2=document.createElement('canvas'); off2.width=qrSize; off2.height=qrSize;
+    drawQR(off2, (location.origin+location.pathname).replace(/\/$/,''), qrSize, '#3E2723', '#ffffff');
+    ctx.drawImage(off2, qrX, qrY);
   }
+  ctx.fillStyle='#FFD180';
+  ctx.font='600 16px "Microsoft YaHei","PingFang SC",sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText('扫码进入体验馆', qrX+qrSize/2, qrY+qrSize+22);
+  ctx.restore();
 }
 function wrapTextLines(ctx,text,maxW){
   var chars=text.split('');var line='';var lines=[];
