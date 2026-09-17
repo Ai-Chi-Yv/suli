@@ -1809,17 +1809,12 @@ window.addEventListener('load', function(){
   detectDevice();
   window.addEventListener('resize', detectDevice);
   renderNav();
-  // 预加载所有本地素材（cacheBuster=false：让浏览器 HTTP 缓存真正生效，秒出！）
-  // 用 Promise.allSettled 并行拉，不阻塞主渲染，失败静默
+  // 预加载关键本地素材（cacheBuster=false：让浏览器 HTTP 缓存真正生效，秒出！）
   var preloadList = [
     ASSETS.ip,
     ASSETS.poster,
     '部署二维码.png',
-    '果农.png',
-    '人物抠图.png',
-    '抠图.png',
-    '微信图片_20260917112834_17740_5.png',
-    '微信图片_20260917113046_17744_5.jpg'
+    '果农.png'
   ];
   preloadList.forEach(function(src){ loadImg(src, 20000, false).catch(function(){}); });
   if(!location.hash) location.hash = '#/home';
@@ -1960,10 +1955,10 @@ function renderStory(el){
     </div>\
     <!-- 实拍图片横条 -->\
     <div class="story-photo-strip">\
-      <div class="sp-item"><img src="微信图片_20260917112834_17740_5.png"></div>\
-      <div class="sp-item"><img src="微信图片_20260917113046_17744_5.jpg"></div>\
-      <div class="sp-item"><img src="人物抠图.png"></div>\
-      <div class="sp-item"><img src="抠图.png"></div>\
+      <div class="sp-item"><img loading="lazy" src="story1.jpg" alt="吕梁山下千亩酥梨基地"></div>\
+      <div class="sp-item"><img loading="lazy" src="story2.jpg" alt="果农手捧酥梨"></div>\
+      <div class="sp-item"><img loading="lazy" src="story3.jpg" alt="梨园丰收竹筐"></div>\
+      <div class="sp-item"><img loading="lazy" src="story4.jpg" alt="汾河谷地梨园风光"></div>\
     </div>\
   </div>\
   <div class="section">\
